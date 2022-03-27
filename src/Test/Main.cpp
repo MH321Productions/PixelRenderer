@@ -2,8 +2,9 @@
 #include <random>
 #include <chrono>
 
-#include "portable-file-dialogs.h"
+//#include "portable-file-dialogs.h"
 #include "stb_image.h"
+#define STB_IMAGE_WRITE_IMPLEMENTATION
 #include "stb_image_write.h"
 
 using namespace std;
@@ -14,9 +15,9 @@ using rgb = unsigned char;
 int main(int anzahl, char* args[]) {
     cout << "Hello World" << endl;
 
-    cout << "Teste Portable File Dialogs" << endl;
+    /*cout << "Teste Portable File Dialogs" << endl;
     pfd::notify("PFD Test", "Dies ist eine Benachrichtigung", pfd::icon::warning);
-    pfd::message("PFD Test", "Dies ist eine MessageBox", pfd::choice::abort_retry_ignore, pfd::icon::question);
+    pfd::message("PFD Test", "Dies ist eine MessageBox", pfd::choice::abort_retry_ignore, pfd::icon::question);*/
 
     cout << "Teste stb-image" << endl;
     cout << string(50, '-') << endl;
