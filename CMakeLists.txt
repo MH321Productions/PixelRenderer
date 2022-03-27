@@ -2,16 +2,14 @@ cmake_minimum_required(VERSION 3.2)
 
 project(pixel-renderer LANGUAGES CXX)
 
+#Includes and Subdirectories
 include_directories(lib)
 include_directories(include)
-
-#Subdirectories
 add_subdirectory(lib/freetype)
 include_directories(lib/freetype/include)
 include_directories(lib/stb)
 
 set(CMAKE_CXX_STANDARD 11)
-#set(CMAKE_CXX_COMPILER g++)
 
 #Main Library
 add_library(PixelRenderer
@@ -21,16 +19,9 @@ add_library(PixelRenderer
 list(APPEND libs freetype)
 target_link_libraries(PixelRenderer PRIVATE "${libs}")
 
-#Externe Libraries
-#if (WIN32)
-#    set(CMAKE_BUILD_TYPE Release)
-#	set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded")
-#else()
-#    set(CMAKE_CXX_FLAGS -no-pie)
-#endif()
-
-
 #Testing
+enable_testing()
 add_executable(AnimTest src/Test/Main.cpp)
 set_target_properties(AnimTest PROPERTIES OUTPUT_NAME "PixelRenderer Animation Test")
 target_link_libraries(AnimTest PRIVATE PixelRenderer)
+add_test(NAME AnimTest COMMAND "PixelRenderer Animation Test")
