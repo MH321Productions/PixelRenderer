@@ -11,7 +11,8 @@
 using namespace std;
 
 Renderer::Renderer(const int& width, const int& height)
-: width(width), height(height), pixelCount(width * height), scalarX(1.0), scalarY(1.0), currentColor(Colors::Transparent), method(Linear) {
+: width(width), height(height), pixelCount(width * height), scalarX(1.0), scalarY(1.0),
+  currentColor(Colors::Transparent), scaling(ScalingMethod::Linear), blending(BlendingMethod::NoBlending) {
     //Daten vorbereiten
     data = new Color[pixelCount];
 
@@ -37,25 +38,21 @@ Color& Renderer::at(const int& x, const int& y) {
     return data[y * width + x];
 }
 
-void Renderer::setPixelBlending(const int& x, const int& y, const Color& c, const bool& setFullyOpaque) {
-    if (c.a == 255) at(x, y) = c;
+void Renderer::setPixel(const int& x, const int& y, const Color& c) {
+    if (c.a == 255 || blending != BlendingMethod::AlphaBlending) at(x, y) = c;
     else if (!c.a) return;
     else {
         double gray = c.a / 255.0, invertGray = (255 - c.a) / 255.0;
         at(x, y) *= invertGray;
         at(x, y) += (c * gray);
-        if (setFullyOpaque) at(x, y).a = 255;
+        if (blending == BlendingMethod::ColorBlending) at(x, y).a = 255;
     }
-}
-
-void Renderer::setPixel(const int& x, const int& y, const Color& c) {
-    at(x, y) = c;
 }
 
 int Renderer::getScaledPixel(const int& pixel, const double& scalar) {
     double scaled = pixel * scalar;
     
-    if (method == Nearest) return (int) round(scaled);
+    if (scaling == ScalingMethod::Nearest) return (int) round(scaled);
     else return (int) scaled;
 }
 
@@ -128,20 +125,20 @@ void Renderer::drawTexture(Texture* texture, const Rect& src, const Rect& dest) 
     double scY = rSrc.height / rDest.height;
 
     int boundResult;
-    /*for (int y = 0; y < h; y++) {
-        for (int x = 0; x < w; x++) {
+    for (int y = 0; y < rDest.height; y++) {
+        for (int x = 0; x < rDest.width; x++) {
             //Testen nach Grenzen
-            boundResult = isOutside(x + destX, y + destY);
+            boundResult = isOutside(x + rDest.x, y + rDest.y);
             //Oben, Unten oder Rechts außerhalb -> Neue Zeile
             //Links außerhalb -> nächster Pixel
             if (boundResult & BoundResult::Bottom || boundResult & BoundResult::Top || boundResult & BoundResult::Right) break;
             if (boundResult & BoundResult::Left) continue;
 
             //Zeichnen
-            if (texture->isOutside(x + sOffX, y + sOffY)) at(x + destX, y + destY) = Colors::Transparent;
-            else at(x + destX, y + destY) = texture->at(x + src.x, y + src.y);
+            if (texture->isOutside(x + rSrc.x, y + rSrc.y)) continue;//at(x + rDest.x, y + rDest.y) = Colors::Transparent;
+            else at(x + rDest.x, y + rDest.y) = texture->at(getScaledPixel(x + rSrc.x, scX), getScaledPixel(y + rSrc.y, scY));
         }
-    }*/
+    }
 }
 
 void Renderer::drawText(Font* font, const String32& text, const int& x, const int& y, const int& size, int charSpacing) {
@@ -215,7 +212,11 @@ void Renderer::setColor(const Color& c) {
 }
 
 void Renderer::setScalingMethod(ScalingMethod method) {
-    this->method = method;
+    scaling = method;
+}
+
+void Renderer::setBlendingMethod(BlendingMethod method) {
+    blending = method;
 }
 
 void Renderer::resize(const int& width, const int& height) {

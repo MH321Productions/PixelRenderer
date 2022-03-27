@@ -27,7 +27,7 @@ class Color {
         Color& operator = (const Color& c);
         Color& operator = (Color& c);
         Color operator + (Color& c) const;
-        Color operator + (Color c) const;
+        Color operator + (const Color& c) const;
         Color& operator += (Color& c);
         Color& operator += (const Color& c);
         Color operator - (Color& c) const;
@@ -58,7 +58,15 @@ enum BoundResult{Inside = 0, Top = 1, Left = 2, Right = 4, Bottom = 8};
  * Beschreibt die Skaliermethode, die der Renderer beim Skalieren von
  * Texturen nutzen soll
  */ 
-enum ScalingMethod : char {Linear, Nearest};
+enum class ScalingMethod : char {Linear, Nearest};
+
+/**
+ * Contains the three different blending methods:
+ * 1. NoBlending: No blending at all
+ * 2. ColorBlending: Only blend the color, the alpha value will be set to 255
+ * 3. AlphaBlending: Blend the color and alpha values
+ */ 
+enum class BlendingMethod : char {NoBlending, ColorBlending, AlphaBlending};
 
 /**
  * Der 2D Renderer, um GUIs, HUDs und ähnliches zu rendern.
@@ -77,7 +85,8 @@ class Renderer {
         Color& at(const int& x, const int& y);
         int getScaledPixel(const int& pixel, const double& scalar);
         double scalarX, scalarY;
-        ScalingMethod method;
+        ScalingMethod scaling;
+        BlendingMethod blending;
 
     public:
         const int width, height, pixelCount;
@@ -105,16 +114,13 @@ class Renderer {
         void setScalingMethod(ScalingMethod method);
 
         /**
-         * Sets one Pixel to the specified Color (with blending enabled)
-         * @param x The x coordinate
-         * @param y The y coordinate
-         * @param c The color
-         * @param setFullyOpaque If the alpha value should be set to 255 (instead of using the blended one)
+         * Set the current blending method
+         * @param method The new method
          */ 
-        void setPixelBlending(const int& x, const int& y, const Color& c, const bool& setFullyOpaque = true);
+        void setBlendingMethod(BlendingMethod method);
 
         /**
-         * Sets one Pixel to the specified Color
+         * Sets one Pixel to the specified Color (with the current blending mode)
          * @param x The x coordinate
          * @param y The y coordinate
          * @param c The color
