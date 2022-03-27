@@ -79,7 +79,4 @@ int main(int anzahl, char* args[]) {
 
     cout << "Test erfolgreich abgeschlossen" << endl;
     cout << string(50, '-') << endl;
-
-    cout << endl << "ENTER zum Beenden";
-    cin.get();
 }
