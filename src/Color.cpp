@@ -56,6 +56,15 @@ Color& Color::operator += (Color& c) {
     return *this;
 }
 
+Color& Color::operator += (const Color& c) {
+    r += c.r;
+    g += c.g;
+    b += c.b;
+    a += c.a;
+
+    return *this;
+}
+
 Color Color::operator - (Color& c) const {
     return {r - c.r, g - c.g, b - c.b, a - c.a};
 }

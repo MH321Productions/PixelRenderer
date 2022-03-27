@@ -29,6 +29,7 @@ class Color {
         Color operator + (Color& c) const;
         Color operator + (Color c) const;
         Color& operator += (Color& c);
+        Color& operator += (const Color& c);
         Color operator - (Color& c) const;
         Color& operator -= (Color& c);
         Color operator * (const rgb& scalar) const;
@@ -121,9 +122,9 @@ class Renderer {
         void setPixel(const int& x, const int& y, const Color& c);
 
         /**
-         * Gibt die gerenderten Pixeldaten zurück, um sie weiter zu verarbeiten
+         * Returns the currently rendered pixel data for further processing
          */ 
-        Color* render();
+        Color* getData();
 
         /**
          * Skaliert den Renderer auf eine neue Größe

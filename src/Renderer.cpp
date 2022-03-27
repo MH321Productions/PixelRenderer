@@ -42,7 +42,8 @@ void Renderer::setPixelBlending(const int& x, const int& y, const Color& c, cons
     else if (!c.a) return;
     else {
         double gray = c.a / 255.0, invertGray = (255 - c.a) / 255.0;
-        at(x, y) = (at(x, y) * invertGray) + (c * gray);
+        at(x, y) *= invertGray;
+        at(x, y) += (c * gray);
         if (setFullyOpaque) at(x, y).a = 255;
     }
 }
@@ -199,7 +200,7 @@ void Renderer::drawText(Font* font, const String32& text, const int& x, const in
 
 }
 
-Color* Renderer::render() {
+Color* Renderer::getData() {
     return data;
 }
 
