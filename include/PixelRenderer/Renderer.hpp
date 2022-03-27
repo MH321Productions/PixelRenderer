@@ -27,6 +27,7 @@ class Color {
         Color& operator = (const Color& c);
         Color& operator = (Color& c);
         Color operator + (Color& c) const;
+        Color operator + (Color c) const;
         Color& operator += (Color& c);
         Color operator - (Color& c) const;
         Color& operator -= (Color& c);
@@ -101,6 +102,23 @@ class Renderer {
          * @param method Die zu verwendende Methode
          */ 
         void setScalingMethod(ScalingMethod method);
+
+        /**
+         * Sets one Pixel to the specified Color (with blending enabled)
+         * @param x The x coordinate
+         * @param y The y coordinate
+         * @param c The color
+         * @param setFullyOpaque If the alpha value should be set to 255 (instead of using the blended one)
+         */ 
+        void setPixelBlending(const int& x, const int& y, const Color& c, const bool& setFullyOpaque = true);
+
+        /**
+         * Sets one Pixel to the specified Color
+         * @param x The x coordinate
+         * @param y The y coordinate
+         * @param c The color
+         */ 
+        void setPixel(const int& x, const int& y, const Color& c);
 
         /**
          * Gibt die gerenderten Pixeldaten zurück, um sie weiter zu verarbeiten

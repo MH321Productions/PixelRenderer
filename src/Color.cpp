@@ -43,6 +43,10 @@ Color Color::operator + (Color& c) const {
     return {r + c.r, g + c.g, b + c.b, a + c.a};
 }
 
+Color Color::operator + (Color c) const {
+    return {r + c.r, g + c.g, b + c.b, a + c.a};
+}
+
 Color& Color::operator += (Color& c) {
     r += c.r;
     g += c.g;

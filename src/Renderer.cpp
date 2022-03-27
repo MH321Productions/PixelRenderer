@@ -37,6 +37,20 @@ Color& Renderer::at(const int& x, const int& y) {
     return data[y * width + x];
 }
 
+void Renderer::setPixelBlending(const int& x, const int& y, const Color& c, const bool& setFullyOpaque) {
+    if (c.a == 255) at(x, y) = c;
+    else if (!c.a) return;
+    else {
+        double gray = c.a / 255.0, invertGray = (255 - c.a) / 255.0;
+        at(x, y) = (at(x, y) * invertGray) + (c * gray);
+        if (setFullyOpaque) at(x, y).a = 255;
+    }
+}
+
+void Renderer::setPixel(const int& x, const int& y, const Color& c) {
+    at(x, y) = c;
+}
+
 int Renderer::getScaledPixel(const int& pixel, const double& scalar) {
     double scaled = pixel * scalar;
     
