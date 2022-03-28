@@ -35,4 +35,4 @@ add_executable(AnimTest
 )
 set_target_properties(AnimTest PROPERTIES OUTPUT_NAME "PixelRenderer Animation Test")
 target_link_libraries(AnimTest PRIVATE PixelRenderer)
-add_test(NAME AnimTest COMMAND "PixelRender Animation Test")
+add_test(NAME AnimTest COMMAND "PixelRenderer Animation Test")
