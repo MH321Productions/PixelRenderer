@@ -21,7 +21,18 @@ target_link_libraries(PixelRenderer PRIVATE "${libs}")
 
 #Testing
 enable_testing()
-add_executable(AnimTest src/Test/Main.cpp)
-set_target_properties(AnimTest PROPERTIES OUTPUT_NAME "PixelRenderer Animation Test")
+
+#Stb Save and Load Test
+add_executable(StbTest src/Test/stb/stbTest.cpp)
+set_target_properties(StbTest PROPERTIES OUTPUT_NAME "PixelRenderer stb Test")
+target_link_libraries(StbTest PRIVATE PixelRenderer)
+add_test(NAME StbTest COMMAND "PixelRenderer stb Test")
+#Animation Test (generating 10 second video)
+add_executable(AnimTest
+	src/Test/Animation/AnimTest.cpp src/Test/Animation/Anim1Shapes.cpp
+	src/Test/Animation/Anim2Textures.cpp src/Test/Animation/Anim3Blending.cpp
+	src/Test/Animation/Anim4Repetition.cpp src/Test/Animation/Anim5Fonts.cpp
+)
+set_target_properties(AnimTest PROPERTIES OUTPUT_NAME "PixelRender Animation Test")
 target_link_libraries(AnimTest PRIVATE PixelRenderer)
-add_test(NAME AnimTest COMMAND "PixelRenderer Animation Test")
+add_test(NAME AnimTest COMMAND "PixelRender Animation Test")
