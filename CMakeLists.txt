@@ -33,6 +33,6 @@ add_executable(AnimTest
 	src/Test/Animation/Anim2Textures.cpp src/Test/Animation/Anim3Blending.cpp
 	src/Test/Animation/Anim4Repetition.cpp src/Test/Animation/Anim5Fonts.cpp
 )
-set_target_properties(AnimTest PROPERTIES OUTPUT_NAME "PixelRender Animation Test")
+set_target_properties(AnimTest PROPERTIES OUTPUT_NAME "PixelRenderer Animation Test")
 target_link_libraries(AnimTest PRIVATE PixelRenderer)
 add_test(NAME AnimTest COMMAND "PixelRender Animation Test")
