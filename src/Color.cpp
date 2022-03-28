@@ -7,6 +7,7 @@ const Color Colors::Red(0xFF, 0, 0, 0xFF);
 const Color Colors::Green(0, 0xFF, 0, 0xFF);
 const Color Colors::Blue(0, 0, 0xFF, 0xFF);
 const Color Colors::Yellow(0xFF, 0xFF, 0, 0xFF);
+const Color Colors::Magenta(0xFF, 0, 0xFF, 0xFF);
 
 Color::Color(const int& r, const int& g, const int& b, const int& a) {
     checkValue(r, Color::r);

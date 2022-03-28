@@ -50,6 +50,7 @@ class Colors {
         static const Color Green;
         static const Color Blue;
         static const Color Yellow;
+        static const Color Magenta;
 };
 
 enum BoundResult{Inside = 0, Top = 1, Left = 2, Right = 4, Bottom = 8};
