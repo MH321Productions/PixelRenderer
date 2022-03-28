@@ -94,6 +94,11 @@ bool saveImage(const int& image) {
     return stbi_write_png(filename.c_str(), 1920, 1080, 4, renderer->getData(), 1920*4);
 }
 
+bool createVideo() {
+    cout << "Image rendering complete. Using ffmpeg to create a video" << endl << endl;
+    return system("ffmpeg -r 30 -i images/Animation-%03d.png Animation.mp4");
+}
+
 bool createImageFolder() {
     cout << "Checking for image folder" << endl;
 
