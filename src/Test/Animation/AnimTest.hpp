@@ -5,8 +5,16 @@
 #include "PixelRenderer/Font.hpp"
 #include "PixelRenderer/Texture.hpp"
 
-Renderer* renderer;
-FontManager* fontMan;
-TextureManager* textureMan;
+//Renderer Components
+static Renderer* renderer;
+static FontManager* fontMan;
+static TextureManager* textureMan;
+static Font* robotoFont;
+static Font* futureFont;
 
-std::string getFilename(const int& image);
+//Animation methods
+void renderShapes(const int& image);
+void renderTextures(const int& image);
+void renderBlending(const int& image);
+void renderRepetition(const int& image);
+void renderFonts(const int& image);
