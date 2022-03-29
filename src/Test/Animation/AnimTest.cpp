@@ -137,9 +137,19 @@ bool initRenderer() {
     renderer = new Renderer(1920, 1080); //Init renderer with native size of Full HD
     textureMan = new TextureManager;
     fontMan = new FontManager;
+    if (!fontMan->isInitialized) return false;
 
     //Load fonts and images
-
+    robotoFont = fontMan->getFont({"res/Roboto-Regular.ttf"});
+    if (!robotoFont->isLoaded) { //Testing for up to 2 directories above the current directory
+        delete robotoFont;
+        robotoFont = fontMan->getFont({"../res/Roboto-Regular.ttf"});
+        if (!robotoFont->isLoaded) {
+            delete robotoFont;
+            robotoFont = fontMan->getFont({"../../res/Roboto-Regular.ttf"});
+            if (!robotoFont->isLoaded) return false;
+        }
+    }
 
     return true;
 }
