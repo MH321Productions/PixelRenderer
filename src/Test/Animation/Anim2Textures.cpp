@@ -1,5 +1,5 @@
 #include "AnimTest.hpp"
 
-void renderTextures(const int& image) {
+void AnimationTest::renderTextures(const int& image) {
     
 }

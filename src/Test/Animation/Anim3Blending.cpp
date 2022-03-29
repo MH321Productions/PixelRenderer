@@ -1,5 +1,5 @@
 #include "AnimTest.hpp"
 
-void renderBlending(const int& image) {
+void AnimationTest::renderBlending(const int& image) {
     
 }

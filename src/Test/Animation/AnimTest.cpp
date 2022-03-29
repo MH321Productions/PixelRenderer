@@ -8,18 +8,14 @@
 
 using namespace std;
 
-//Internal functions
-string getFilename(const int& image);
-bool saveImage(const int& image);
-bool createImageFolder();
-void renderNothing(const int& image) {} //just for safety
-bool initRenderer();
-void cleanup();
-bool createVideo();
-
 int main() {
     cout << "Hello World" << endl;
 
+    AnimationTest test;
+    return test.onExecute();
+}
+
+int AnimationTest::onExecute() {
     cout << "Starting animation test" << endl;
 
     if (!createImageFolder()) {
@@ -32,7 +28,7 @@ int main() {
         return 2;
     }
 
-    void (*animFunc)(const int&);
+    void (AnimationTest::*animFunc)(const int&);
     int result = 0;
     for (int index = 0; index < 300; index++) {
         cout << "Rendering frame " << index << endl;
@@ -42,26 +38,26 @@ int main() {
         //Choose animation method
         switch (index / 60) {
             case 0: 
-                animFunc = renderShapes;
+                animFunc = &AnimationTest::renderShapes;
                 break;
             case 1:
-                animFunc = renderTextures;
+                animFunc = &AnimationTest::renderTextures;
                 break;
             case 2:
-                animFunc = renderBlending;
+                animFunc = &AnimationTest::renderBlending;
                 break;
             case 3:
-                animFunc = renderRepetition;
+                animFunc = &AnimationTest::renderRepetition;
                 break;
             case 4:
-                animFunc = renderFonts;
+                animFunc = &AnimationTest::renderFonts;
                 break;
             default:
-                animFunc = renderNothing;
+                animFunc = &AnimationTest::renderNothing;
         }
 
         //Actually call it
-        animFunc(index % 60);
+        (this->*animFunc)(index % 60);
 
         //Save rendered image
         if (!saveImage(index)) {
@@ -78,7 +74,7 @@ int main() {
     return result;
 }
 
-string getFilename(const int& image) {
+string AnimationTest::getFilename(const int& image) {
     ostringstream str;
     str << "images/Animation-";
     str << setw(3) << setfill('0') << image;
@@ -87,19 +83,19 @@ string getFilename(const int& image) {
     return str.str();
 }
 
-bool saveImage(const int& image) {
+bool AnimationTest::saveImage(const int& image) {
     string filename = getFilename(image);
 
     //Save via stb_image
     return stbi_write_png(filename.c_str(), 1920, 1080, 4, renderer->getData(), 1920*4);
 }
 
-bool createVideo() {
+bool AnimationTest::createVideo() {
     cout << "Image rendering complete. Using ffmpeg to create a video" << endl << endl;
     return system("ffmpeg -r 30 -i images/Animation-%03d.png Animation.mp4");
 }
 
-bool createImageFolder() {
+bool AnimationTest::createImageFolder() {
     cout << "Checking for image folder" << endl;
 
     //Using old API, instead of C++17 std::filesystem
@@ -132,7 +128,7 @@ bool createImageFolder() {
     return true;
 }
 
-bool initRenderer() {
+bool AnimationTest::initRenderer() {
     //Init
     renderer = new Renderer(1920, 1080); //Init renderer with native size of Full HD
     textureMan = new TextureManager;
@@ -154,7 +150,7 @@ bool initRenderer() {
     return true;
 }
 
-void cleanup() {
+void AnimationTest::cleanup() {
     cout << "Deleting managers and renderer" << endl;
     delete fontMan;
     delete textureMan;

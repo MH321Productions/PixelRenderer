@@ -1,5 +1,5 @@
 #include "AnimTest.hpp"
 
-void renderFonts(const int& image) {
+void AnimationTest::renderFonts(const int& image) {
     
 }
