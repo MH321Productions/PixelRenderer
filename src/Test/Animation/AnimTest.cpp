@@ -36,7 +36,7 @@ int main() {
     int result = 0;
     for (int index = 0; index < 300; index++) {
         cout << "Rendering frame " << index << endl;
-        renderer->setColor(Colors::Transparent);
+        renderer->setColor(Colors::Blue);
         renderer->clear();
 
         //Choose animation method
