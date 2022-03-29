@@ -44,7 +44,8 @@ Font* FontManager::getFont(const LoadInfo& info) {
 
 bool FontManager::checkFTError(const int& error, const std::string& errorMessage) {
     if (error) {
-        cerr << errorMessage << ": " << FT_Error_String(error) << endl;
+        const char* msg = FT_Error_String(error);
+        cerr << errorMessage << ": " << (msg ? msg : "") << endl;
         return false;
     }
 
