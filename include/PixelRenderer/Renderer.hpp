@@ -5,7 +5,7 @@
 
 using rgb = unsigned char;
 
-class Texture;        //Texture/Texture.hpp
+class Texture;          //Texture/Texture.hpp
 class Font;             //2D/Font.hpp
 class String32;         //2D/Unicode.cpp
 class Point;            //2D/Geometry.hpp
@@ -36,6 +36,10 @@ class Color {
         Color& operator *= (const rgb& scalar);
         Color operator / (const rgb& scalar) const;
         Color& operator /= (const rgb& scalar);
+        Color operator * (const double& scalar) const;
+        Color& operator *= (const double& scalar);
+        Color operator / (const double& scalar) const;
+        Color& operator /= (const double& scalar);
 };
 
 class Colors {

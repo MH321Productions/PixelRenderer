@@ -12,9 +12,10 @@ using namespace std;
 
 Renderer::Renderer(const int& width, const int& height)
 : width(width), height(height), pixelCount(width * height), scalarX(1.0), scalarY(1.0),
-  currentColor(Colors::Transparent), scaling(ScalingMethod::Linear), blending(BlendingMethod::NoBlending) {
+  scaling(ScalingMethod::Linear), blending(BlendingMethod::NoBlending) {
     //Daten vorbereiten
     data = new Color[pixelCount];
+    currentColor = Colors::Transparent;
 
     cout << "2D Renderer initialisiert (" << width << " x " << height << ")" << endl;
 }
@@ -39,13 +40,14 @@ Color& Renderer::at(const int& x, const int& y) {
 }
 
 void Renderer::setPixel(const int& x, const int& y, const Color& c) {
-    if (c.a == 255 || blending != BlendingMethod::AlphaBlending) at(x, y) = c;
+    if (c.a == 255 || blending == BlendingMethod::NoBlending) at(x, y) = c;
     else if (!c.a) return;
     else {
         double gray = c.a / 255.0, invertGray = (255 - c.a) / 255.0;
-        at(x, y) *= invertGray;
-        at(x, y) += (c * gray);
-        if (blending == BlendingMethod::ColorBlending) at(x, y).a = 255;
+        Color& pixel = at(x, y);
+        pixel *= invertGray;
+        pixel += (c * gray);
+        if (blending == BlendingMethod::ColorBlending) pixel.a = 255;
     }
 }
 
@@ -150,6 +152,7 @@ void Renderer::drawText(Font* font, const String32& text, const int& x, const in
     FT_Bitmap map;
     if (charSpacing < 0) charSpacing = size / 10 + 1;
     int spaceSpacing = size / 2;
+    Color temp;
 
     for (const uint32_t& i: text) {
         if (i == 32) {
@@ -186,8 +189,9 @@ void Renderer::drawText(Font* font, const String32& text, const int& x, const in
                 index = (tempY - startY) * map.width + (tempX - xPos);
 
                 if (map.buffer[index] != 0) {
-                    at(tempX, tempY) = currentColor;
-                    at(tempX, tempY).a = map.buffer[index];
+                    temp = currentColor;
+                    temp.a = map.buffer[index];
+                    setPixel(tempX, tempY, temp);
                 }
             }
         }
