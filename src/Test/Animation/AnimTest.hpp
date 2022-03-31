@@ -32,3 +32,54 @@ class AnimationTest {
     public:
         int onExecute();
 };
+
+/**
+ * Util class to use math functions like sinus and cosinus
+ * in a range of 30/60 frames (30/60 frames equal 2π)
+ */ 
+class Functions {
+    private:
+        static const double full60;
+        static const double full30;
+        static const double pi;
+    public:
+        /**
+         * sine with periodic range of 60:
+         * 0 -> 0
+         * 15 -> 1
+         * 30 -> 0
+         * 45 -> -1
+         * 60 -> 0
+         */ 
+        static double sin60(const int& image);
+        
+        /**
+         * cosine with periodic range of 60:
+         * 0 -> 1
+         * 15 -> 0
+         * 30 -> -1
+         * 45 -> 0
+         * 60 -> 1
+         */ 
+        static double cos60(const int& image);
+
+        /**
+         * sine with periodic range of 30:
+         * 0 -> 0
+         * 7 -> 1
+         * 15 -> 0
+         * 22 -> -1
+         * 30 -> 0
+         */ 
+        static double sin30(const int& image);
+
+        /**
+         * cosine with periodic range of 30:
+         * 0 -> 1
+         * 7 -> 0
+         * 15 -> -1
+         * 22 -> 0
+         * 30 -> 1
+         */ 
+        static double cos30(const int& image);
+};
