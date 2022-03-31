@@ -32,6 +32,7 @@ add_executable(AnimTest
 	src/Test/Animation/AnimTest.cpp src/Test/Animation/Anim1Shapes.cpp
 	src/Test/Animation/Anim2Textures.cpp src/Test/Animation/Anim3Blending.cpp
 	src/Test/Animation/Anim4Repetition.cpp src/Test/Animation/Anim5Fonts.cpp
+	src/Test/Animation/AnimFunctions.cpp
 )
 set_target_properties(AnimTest PROPERTIES OUTPUT_NAME "PixelRenderer Animation Test")
 target_link_libraries(AnimTest PRIVATE PixelRenderer)
