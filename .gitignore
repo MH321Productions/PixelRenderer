@@ -31,7 +31,8 @@
 *.out
 *.app
 
-# Internal Directories and generated images
+# Internal Directories and generated images/videos
 .vscode/
 bin/
 *.png
+*.mp4
