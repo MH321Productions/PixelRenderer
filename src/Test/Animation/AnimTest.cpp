@@ -92,7 +92,7 @@ bool AnimationTest::saveImage(const int& image) {
 
 bool AnimationTest::createVideo() {
     cout << "Image rendering complete. Using ffmpeg to create a video" << endl << endl;
-    return system("ffmpeg -r 30 -i images/Animation-%03d.png Animation.mp4");
+    return system("ffmpeg -y -r 30 -i images/Animation-%03d.png Animation.mp4");
 }
 
 bool AnimationTest::createImageFolder() {
