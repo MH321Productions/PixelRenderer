@@ -61,6 +61,8 @@ int Renderer::getScaledPixel(const int& pixel, const double& scalar) {
 void Renderer::drawRect(const Rect& rect, const int& linesize) {
     //Wenn das Rechteck komplett außerhalb des Fensters ist, wird abgebrochen (Die zwei Eckpunkte werden getestet)
     if (isOutside(rect.x, rect.y) && isOutside(rect.x + rect.width, rect.y + rect.height)) return;
+    //If the linesize is < 1, nothing is rendered
+    if (linesize < 1) return;
 
     int lineOffsetY = 0, lineOffsetX = 0;
     int maxLinesizeX = rect.width - linesize, maxLinesizeY = rect.height - linesize;
