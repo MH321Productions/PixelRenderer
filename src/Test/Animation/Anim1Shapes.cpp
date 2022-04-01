@@ -18,9 +18,9 @@ void AnimationTest::renderShapes(const int& image) {
     fill = {120, 300, 200 + fillOffset, 200 + 2 * fillOffset};
     renderer->fillRect(fill);
 
-    //TODO: Draw line rect
+    //Draw line rect
     renderer->setColor(Colors::Yellow);
-    lineRectSize = (int) (Functions::cos60(image) * 100);
+    lineRectSize = (int) (Functions::cos(image, 240) * 100);
     renderer->drawRect(lineRect, lineRectSize);
 
     //TODO: Render other shapes when they are implemented
