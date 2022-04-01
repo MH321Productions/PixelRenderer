@@ -42,6 +42,7 @@ class Functions {
         static const double full60;
         static const double full30;
         static const double pi;
+        static const double pi2;
     public:
         /**
          * sine with periodic range of 60:
@@ -82,4 +83,14 @@ class Functions {
          * 30 -> 1
          */ 
         static double cos30(const int& image);
+
+        /**
+         * sine with variable periodic range
+         */ 
+        static double sin(const int& image, const int& range);
+
+        /**
+         * cosine with variable periodic range
+         */ 
+        static double cos(const int& image, const int& range);
 };
