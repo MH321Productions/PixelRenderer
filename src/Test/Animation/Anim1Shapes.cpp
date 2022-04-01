@@ -3,8 +3,8 @@
 #include "PixelRenderer/Geometry.hpp"
 
 String32 description = U"Render basic shapes";
-Rect fill, lineRect;
-int fillOffset, lineRectOffset, lineRectSize;
+Rect fill, lineRect{120, 800, 200, 200};
+int fillOffset, lineRectSize;
 
 void AnimationTest::renderShapes(const int& image) {
     renderer->setColor(Colors::Green);
@@ -19,7 +19,9 @@ void AnimationTest::renderShapes(const int& image) {
     renderer->fillRect(fill);
 
     //TODO: Draw line rect
-    //renderer->setColor(Colors::Yellow);
+    renderer->setColor(Colors::Yellow);
+    lineRectSize = (int) (Functions::cos60(image) * 100);
+    renderer->drawRect(lineRect, lineRectSize);
 
     //TODO: Render other shapes when they are implemented
 }
