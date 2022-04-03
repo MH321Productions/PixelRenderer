@@ -3,6 +3,7 @@
 #include <iomanip>
 
 #include "AnimTest.hpp"
+#include "MemoryDump.hpp"
 #define STB_IMAGE_WRITE_IMPLEMENTATION
 #include "stb_image_write.h"
 
@@ -146,6 +147,19 @@ bool AnimationTest::initRenderer() {
             if (!robotoFont->isLoaded) return false;
         }
     }
+    futureFont = fontMan->getFont({Kenney_Future_ttf, Kenney_Future_ttf_len});
+    if (!futureFont->isLoaded) return false;
+
+    cross = textureMan->getTexture({"res/RedCross.png"});
+    if (!cross) { //Testing for up to 2 directories above the current directory
+        cross = textureMan->getTexture({"../res/RedCross.png"});
+        if (!cross) {
+            cross = textureMan->getTexture({"../../res/RedCross.png"});
+            if (!cross) return false;
+        }
+    }
+    check = textureMan->getTexture({GreenCheck_png, GreenCheck_png_len});
+    if (!check) return false;
 
     return true;
 }
