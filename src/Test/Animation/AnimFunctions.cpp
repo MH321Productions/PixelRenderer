@@ -14,3 +14,11 @@ double Functions::cos(const int& image, const int& range) {
     double scalar = pi2 / range;
     return std::cos(image * scalar);
 }
+
+double Functions::linUp(const int& image, const int& range) {
+    return (double) image / (double) range;
+}
+
+double Functions::linDown(const int& image, const int& range) {
+    return 1.0 - ((double) image / (double) range);
+}

@@ -52,4 +52,14 @@ class Functions {
          * cosine with variable periodic range
          */ 
         static double cos(const int& image, const int& range);
+
+        /**
+         * linear range between 0 and 1 (can become > 1 for images greater than the given range)
+         */ 
+        static double linUp(const int& image, const int& range);
+
+        /**
+         * linear range between 1 and 0 (can become < 0 for images greater than the given range)
+         */ 
+        static double linDown(const int& image, const int& range);
 };
