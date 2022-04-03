@@ -16,9 +16,9 @@ double Functions::cos(const int& image, const int& range) {
 }
 
 double Functions::linUp(const int& image, const int& range) {
-    return (double) image / (double) range;
+    return (double) image / (double) (range - 1);
 }
 
 double Functions::linDown(const int& image, const int& range) {
-    return 1.0 - ((double) image / (double) range);
+    return 1.0 - ((double) image / (double) (range - 1));
 }
