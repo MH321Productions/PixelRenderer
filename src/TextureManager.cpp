@@ -11,7 +11,7 @@ Texture* TextureManager::getTexture(const LoadInfo& info) {
     }
 
     Texture* load = Texture::loadTexture(info, this);
-    loadedTextures.push_back(load);
+    if (load) loadedTextures.push_back(load);
 
     return load;
 }
