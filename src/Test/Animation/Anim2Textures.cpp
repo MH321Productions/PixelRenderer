@@ -10,7 +10,7 @@ Rect texTableHorTop {0, 210, 1920, 10};
 Rect texTableHorBottom {0, 645, 1920, 10};
 
 void AnimationTest::renderTextures(const int& image) {
-    //Description text
+    //Description texts
     renderer->setColor(Colors::Green);
     renderer->setBlendingMethod(BlendingMethod::ColorBlending);
     renderer->drawText(robotoFont, texDescription, 20, 120, 150);
