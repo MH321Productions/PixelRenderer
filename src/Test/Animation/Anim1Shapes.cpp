@@ -14,7 +14,7 @@ void AnimationTest::renderShapes(const int& image) {
 
     //Fill rect
     renderer->setColor(Colors::Red);
-    fillOffset = (int) (Functions::sin60(image) * 100);
+    fillOffset = (int) (Functions::sin(image, 60) * 100);
     fill = {120, 300, 200 + fillOffset, 200 + 2 * fillOffset};
     renderer->fillRect(fill);
 
