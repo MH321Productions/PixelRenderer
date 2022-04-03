@@ -12,6 +12,7 @@ class AnimationTest {
         TextureManager* textureMan;
         Font* robotoFont;
         Font* futureFont;
+        Texture* cross, *check;
     
         //Animation parts
         void renderShapes(const int& image);
