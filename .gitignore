@@ -36,4 +36,4 @@
 bin/
 *.png
 *.mp4
-!res/RedCross.png
+!res/*.png
