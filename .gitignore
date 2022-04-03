@@ -35,5 +35,6 @@
 .vscode/
 bin/
 *.png
+*.gif
 *.mp4
 !res/*.png
