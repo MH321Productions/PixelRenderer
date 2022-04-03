@@ -20,7 +20,7 @@ void AnimationTest::renderShapes(const int& image) {
 
     //Draw line rect
     renderer->setColor(Colors::Yellow);
-    lineRectSize = (int) (Functions::cos(image, 240) * 100);
+    lineRectSize = (int) (Functions::linUp(image, 60) * 100);
     renderer->drawRect(lineRect, lineRectSize);
 
     //TODO: Render other shapes when they are implemented
