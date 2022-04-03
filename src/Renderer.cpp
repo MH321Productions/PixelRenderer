@@ -125,8 +125,11 @@ void Renderer::drawTexture(Texture* texture, const Rect& src, const Rect& dest) 
     if (isOutside(rDest.x, rDest.y) && isOutside(rDest.x + rDest.width, rDest.y + rDest.height)) return;
 
     //Skalar berechnen
-    double scX = rSrc.width / rDest.width;
-    double scY = rSrc.height / rDest.height;
+    double scX = (double) rSrc.width / (double) rDest.width;
+    double scY = (double) rSrc.height / (double) rDest.height;
+
+    //scaled pixels
+    int newX, newY;
 
     int boundResult;
     for (int y = 0; y < rDest.height; y++) {
@@ -139,8 +142,10 @@ void Renderer::drawTexture(Texture* texture, const Rect& src, const Rect& dest) 
             if (boundResult & BoundResult::Left) continue;
 
             //Zeichnen
-            if (texture->isOutside(x + rSrc.x, y + rSrc.y)) continue;//at(x + rDest.x, y + rDest.y) = Colors::Transparent;
-            else at(x + rDest.x, y + rDest.y) = texture->at(getScaledPixel(x + rSrc.x, scX), getScaledPixel(y + rSrc.y, scY));
+            newX = getScaledPixel(x + rSrc.x, scX);
+            newY = getScaledPixel(y + rSrc.y, scY);
+            if (texture->isOutside(newX, newY)) continue;//at(x + rDest.x, y + rDest.y) = Colors::Transparent;
+            else setPixel(x + rDest.x, y + rDest.y, texture->at(newX, newY));
         }
     }
 }
