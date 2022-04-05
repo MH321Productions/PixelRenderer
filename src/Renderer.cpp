@@ -11,8 +11,7 @@
 using namespace std;
 
 Renderer::Renderer(const int& width, const int& height)
-: width(width), height(height), pixelCount(width * height), scalarX(1.0), scalarY(1.0),
-  scaling(ScalingMethod::Linear), blending(BlendingMethod::NoBlending) {
+: width(width), height(height), pixelCount(width * height), scalarX(1.0), scalarY(1.0), blending(BlendingMethod::NoBlending) {
     //Daten vorbereiten
     data = new Color[pixelCount];
     currentColor = Colors::Transparent;
@@ -54,8 +53,7 @@ void Renderer::setPixel(const int& x, const int& y, const Color& c) {
 int Renderer::getScaledPixel(const int& pixel, const double& scalar) {
     double scaled = pixel * scalar;
     
-    if (scaling == ScalingMethod::Nearest) return (int) round(scaled);
-    else return (int) scaled;
+    return (int) scaled;
 }
 
 void Renderer::drawRect(const Rect& rect, const int& linesize) {
@@ -220,10 +218,6 @@ void Renderer::clear() {
 
 void Renderer::setColor(const Color& c) {
     currentColor = c;
-}
-
-void Renderer::setScalingMethod(ScalingMethod method) {
-    scaling = method;
 }
 
 void Renderer::setBlendingMethod(BlendingMethod method) {

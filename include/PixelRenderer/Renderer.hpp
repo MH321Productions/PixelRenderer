@@ -60,12 +60,6 @@ class Colors {
 enum BoundResult{Inside = 0, Top = 1, Left = 2, Right = 4, Bottom = 8};
 
 /**
- * Beschreibt die Skaliermethode, die der Renderer beim Skalieren von
- * Texturen nutzen soll
- */ 
-enum class ScalingMethod : char {Linear, Nearest};
-
-/**
  * Contains the three different blending methods:
  * 1. NoBlending: No blending at all
  * 2. ColorBlending: Only blend the color, the alpha value will be set to 255
@@ -90,7 +84,6 @@ class Renderer {
         Color& at(const int& x, const int& y);
         int getScaledPixel(const int& pixel, const double& scalar);
         double scalarX, scalarY;
-        ScalingMethod scaling;
         BlendingMethod blending;
 
     public:
@@ -111,12 +104,6 @@ class Renderer {
          * @param c Die zu setzende Farbe
          */ 
         void setColor(const Color& c);
-
-        /**
-         * Setzt die aktuelle Rendermethode
-         * @param method Die zu verwendende Methode
-         */ 
-        void setScalingMethod(ScalingMethod method);
 
         /**
          * Set the current blending method
