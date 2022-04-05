@@ -29,6 +29,7 @@ class AnimationTest {
         bool initRenderer();
         void cleanup();
         bool createVideo();
+        bool createVideoParts(const int& partCount);
 
     public:
         int onExecute();

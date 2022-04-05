@@ -70,6 +70,8 @@ int AnimationTest::onExecute() {
 
     if (!result && !createVideo()) result = 303; //Return value 303: Couldn't create video
 
+    if (!result && !createVideoParts(2)) result = 304; //Return value 304: couldn't create parts
+
     cleanup();
 
     return result;
@@ -93,7 +95,36 @@ bool AnimationTest::saveImage(const int& image) {
 
 bool AnimationTest::createVideo() {
     cout << "Image rendering complete. Using ffmpeg to create a video" << endl << endl;
-    return system("ffmpeg -y -r 30 -i images/Animation-%03d.png Animation.mp4");
+    return !system("ffmpeg -y -r 30 -i images/Animation-%03d.png Animation.mp4");
+}
+
+bool AnimationTest::createVideoParts(const int& partCount) {
+    cout << "Creating video parts" << endl;
+
+    bool result = true;
+    int value;
+    ostringstream str;
+    string cmd;
+
+    for (int index = 0; index < partCount; index++) {
+        cout << "Creating part " << (index + 1) << endl;
+        
+        //prepare start argument
+        str << "ffmpeg -y -r 30 -start_number ";
+        str << (index * 60);
+        str << " -i images/Animation-%03d.png -frames 60 Part";
+        str << (index + 1);
+        str << ".mp4";
+        cmd = str.str();
+        str.clear();
+        str.str("");
+
+        //run command
+        value = system(cmd.c_str());
+        if (value) result = false;
+    }
+
+    return result;
 }
 
 bool AnimationTest::createImageFolder() {
