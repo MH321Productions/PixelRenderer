@@ -8,7 +8,7 @@ const size_t String32::npos = static_cast<size_t>(-1);
 
 String32::String32(const char32_t* text, const std::size_t& max) : sizeIntern(0) {
     for (size_t i = 0; i < max; i++) {
-        if (text[i] == '\0') break; //'\0' ist das Schlusszeichen eines C-Strings
+        if (text[i] == '\0') break; //'\0' is always the last char of a C-string
 
         data.push_back((uint32_t) text[i]);
         sizeIntern++;
@@ -65,7 +65,7 @@ void String32::append(const String32& other) {
 
 void String32::append(char32_t* text, const std::size_t& max) {
     for (size_t i = 0; i < max; i++) {
-        if (text[i] == '\0') break; //'\0' ist das Schlusszeichen eines C-Strings
+        if (text[i] == '\0') break; //'\0' is always the last char of a C-string
 
         data.push_back((uint32_t) text[i]);
         sizeIntern++;
@@ -124,8 +124,8 @@ String32 String32::operator + (const String32& other) const {
 
     size_t index = 0;
 
-    for (const uint32_t& i: data) newData.at(index) = i; index++; //Aktueller String
-    for (const uint32_t& i: other.data) newData.at(index) = i; index++; //Neuer String
+    for (const uint32_t& i: data) newData.at(index) = i; index++; //Current string
+    for (const uint32_t& i: other.data) newData.at(index) = i; index++; //New String
 
     return {newData, newSize};
 }
@@ -136,10 +136,10 @@ String32 String32::operator + (char32_t* other) const {
 
     size_t index = 0;
 
-    for (const uint32_t& i: data) newData.at(index) = i; index++; //Aktueller String
+    for (const uint32_t& i: data) newData.at(index) = i; index++; //Current string
     
     index = 0;
-    while (other[index] != '\0') { //Neuer String
+    while (other[index] != '\0') { //New String
         newData.push_back((uint32_t) other[index]);
         newSize++;
         index++;
@@ -154,8 +154,8 @@ String32 String32::operator + (const std::vector<uint32_t>& other) const {
 
     size_t index = 0;
 
-    for (const uint32_t& i: data) newData.at(index) = i; index++; //Aktueller String
-    for (const uint32_t& i: other) newData.at(index) = i; index++; //Neuer String
+    for (const uint32_t& i: data) newData.at(index) = i; index++; //Current string
+    for (const uint32_t& i: other) newData.at(index) = i; index++; //New String
 
     return {newData, newSize};
 }
@@ -166,8 +166,8 @@ String32 String32::operator + (const char32_t& c) const {
 
     size_t index = 0;
 
-    for (const uint32_t& i: data) newData.at(index) = i; index++; //Aktueller String
-    newData.at(index) = (uint32_t) c; //Neuer String
+    for (const uint32_t& i: data) newData.at(index) = i; index++; //Current string
+    newData.at(index) = (uint32_t) c; //New String
 
     return {newData, newSize};
 }
@@ -178,8 +178,8 @@ String32 String32::operator + (const uint32_t& i) const {
 
     size_t index = 0;
 
-    for (const uint32_t& i: data) newData.at(index) = i; index++; //Aktueller String
-    newData.at(index) = i; //Neuer String
+    for (const uint32_t& i: data) newData.at(index) = i; index++; //Current string
+    newData.at(index) = i; //New String
 
     return {newData, newSize};
 }
@@ -195,7 +195,7 @@ String32& String32::operator = (char32_t* other) {
     data.clear();
     sizeIntern = 0;
 
-    while (other[sizeIntern] != '\0') data.push_back((uint32_t) other[sizeIntern]); sizeIntern++; //Neuer String
+    while (other[sizeIntern] != '\0') data.push_back((uint32_t) other[sizeIntern]); sizeIntern++; //New String
 
     return *this;
 }

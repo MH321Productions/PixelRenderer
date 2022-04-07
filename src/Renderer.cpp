@@ -12,11 +12,11 @@ using namespace std;
 
 Renderer::Renderer(const int& width, const int& height)
 : width(width), height(height), pixelCount(width * height), scalarX(1.0), scalarY(1.0), blending(BlendingMethod::NoBlending) {
-    //Daten vorbereiten
+    //prepare data
     data = new Color[pixelCount];
     currentColor = Colors::Transparent;
 
-    cout << "2D Renderer initialisiert (" << width << " x " << height << ")" << endl;
+    //cout << "renderer initialized (" << width << " x " << height << ")" << endl;
 }
 
 Renderer::~Renderer() {
@@ -57,7 +57,7 @@ int Renderer::getScaledPixel(const int& pixel, const double& scalar) {
 }
 
 void Renderer::drawRect(const Rect& rect, const int& linesize) {
-    //Wenn das Rechteck komplett außerhalb des Fensters ist, wird abgebrochen (Die zwei Eckpunkte werden getestet)
+    //If the rect is outside the canvas, abort
     if (isOutside(rect.x, rect.y) && isOutside(rect.x + rect.width, rect.y + rect.height)) return;
     //If the linesize is < 1, nothing is rendered
     if (linesize < 1) return;
@@ -68,41 +68,41 @@ void Renderer::drawRect(const Rect& rect, const int& linesize) {
     for (int y = rect.y; y < rect.y + rect.height; y++) {
         for (int x = rect.x; x < rect.x + rect.width; x++) {
             
-            //Testen nach Grenzen
+            //Test for boundaries
             boundResult = isOutside(x, y);
-            //Oben, Unten oder Rechts außerhalb -> Neue Zeile
-            //Links außerhalb -> nächster Pixel
+            //Right, below, or above the canvas -> next line
+            //Left of the canvas -> next pixel
             if (boundResult & BoundResult::Bottom || boundResult & BoundResult::Top || boundResult & BoundResult::Right) break;
             if (boundResult & BoundResult::Left) continue;
 
-            //Zeichnen
+            //Draw
             if (lineOffsetX < linesize || lineOffsetY < linesize || lineOffsetX >= maxLinesizeX || lineOffsetY >= maxLinesizeY) {
                 at(x, y) = currentColor;
             }
 
             lineOffsetX++;
         }
-        //Neue Zeile
+        //Next line
         lineOffsetX = 0;
         lineOffsetY++;
     }
 }
 
 void Renderer::fillRect(const Rect& rect) {
-    //Wenn das Rechteck komplett außerhalb des Fensters ist, wird abgebrochen (Die zwei Eckpunkte werden getestet)
+    //If the rect is outside the canvas, abort
     if (isOutside(rect.x, rect.y) && isOutside(rect.x + rect.width, rect.y + rect.height)) return;
 
     int boundResult;
     for (int y = rect.y; y < rect.y + rect.height; y++) {
         for (int x = rect.x; x < rect.x + rect.width; x++) {
-            //Testen nach Grenzen
+            //Test for boundaries
             boundResult = isOutside(x, y);
-            //Oben, Unten oder Rechts außerhalb -> Neue Zeile
-            //Links außerhalb -> nächster Pixel
+            //Right, below, or above the canvas -> next line
+            //Left of the canvas -> next pixel
             if (boundResult & BoundResult::Bottom || boundResult & BoundResult::Top || boundResult & BoundResult::Right) break;
             if (boundResult & BoundResult::Left) continue;
 
-            //Zeichnen
+            //Draw
             at(x, y) = currentColor;
         }
     }
@@ -111,18 +111,18 @@ void Renderer::fillRect(const Rect& rect) {
 void Renderer::drawTexture(Texture* texture, const Rect& src, const Rect& dest) {
     Rect rSrc, rDest;
 
-    //Teste nach gültigkeit des Starts, sonst 0, 0, width, height
+    //Test if src is valid, or else 0, 0, width, height
     if (src.isValid()) rSrc = src;
     else rSrc = {0, 0, texture->width, texture->height};
 
-    //Teste nach Gültigkeit des Ziels, sonst 0, 0, renderWidth, renderHeight
+    //Test if dest is valid, or else 0, 0, renderWidth, renderHeight
     if (dest.isValid()) rDest = dest;
     else rDest = {0, 0, width, height};
 
-    //Wenn das Rechteck komplett außerhalb des Fensters ist, wird abgebrochen (Die zwei Eckpunkte werden getestet)
+    //If the rect is outside the canvas, abort
     if (isOutside(rDest.x, rDest.y) && isOutside(rDest.x + rDest.width, rDest.y + rDest.height)) return;
 
-    //Skalar berechnen
+    //calculate scalars
     double scX = (double) rSrc.width / (double) rDest.width;
     double scY = (double) rSrc.height / (double) rDest.height;
 
@@ -132,14 +132,14 @@ void Renderer::drawTexture(Texture* texture, const Rect& src, const Rect& dest) 
     int boundResult;
     for (int y = 0; y < rDest.height; y++) {
         for (int x = 0; x < rDest.width; x++) {
-            //Testen nach Grenzen
+            //Test for boundaries
             boundResult = isOutside(x + rDest.x, y + rDest.y);
-            //Oben, Unten oder Rechts außerhalb -> Neue Zeile
-            //Links außerhalb -> nächster Pixel
+            //Right, below, or above the canvas -> next line
+            //Left of the canvas -> next pixel
             if (boundResult & BoundResult::Bottom || boundResult & BoundResult::Top || boundResult & BoundResult::Right) break;
             if (boundResult & BoundResult::Left) continue;
 
-            //Zeichnen
+            //Draw
             newX = getScaledPixel(x + rSrc.x, scX);
             newY = getScaledPixel(y + rSrc.y, scY);
             if (texture->isOutside(newX, newY)) continue;//at(x + rDest.x, y + rDest.y) = Colors::Transparent;
@@ -168,15 +168,15 @@ void Renderer::drawText(Font* font, const String32& text, const int& x, const in
         glyphIndex = FT_Get_Char_Index(font->face, i);
         if (!FontManager::checkFTError(
             FT_Load_Glyph(font->face, glyphIndex, FT_LOAD_DEFAULT),
-            "Konnte Glyph nicht laden"
+            "Couldn't load glyph"
         )) continue;
 
         if (!FontManager::checkFTError(
             FT_Render_Glyph(slot, FT_RENDER_MODE_NORMAL),
-            "Konnte Glyph nicht rendern"
+            "Couldn't render glyph"
         )) continue;
 
-        //Über generierte Bitmap iterieren. Grayscale Wert als alpha setzen
+        //Iterate over bitmap. Use grayscale value as alpha
         int index = 0;
         map = slot->bitmap;
         int boundResult;
@@ -184,10 +184,10 @@ void Renderer::drawText(Font* font, const String32& text, const int& x, const in
         for (int tempY = y - slot->bitmap_top; tempY < y + map.rows - slot->bitmap_top; tempY++) {
             for (int tempX = xPos; tempX < xPos + map.width; tempX++) {
 
-                //Testen nach Grenzen
+                //Test for boundaries
                 boundResult = isOutside(tempX, tempY);
-                //Oben, Unten oder Rechts außerhalb -> Neue Zeile
-                //Links außerhalb -> nächster Pixel
+                //Right, below, or above the canvas -> next line
+                //Left of the canvas -> next pixel
                 if (boundResult & BoundResult::Bottom || boundResult & BoundResult::Top || boundResult & BoundResult::Right) break;
                 if (boundResult & BoundResult::Left) continue;
 
@@ -227,7 +227,7 @@ void Renderer::setBlendingMethod(BlendingMethod method) {
 void Renderer::resize(const int& width, const int& height) {
     if (width < 1 || height < 1) return;
 
-    //Skalare Vorbereiten
+    //Calculate scalars
     scalarX = (double) this->width / (double) width;
     scalarY = (double) this->height / (double) height;
 }
@@ -238,15 +238,4 @@ Point Renderer::getRelPos(const int& x, const int& y) {
 
 Point Renderer::getRelPos(const Point& pos) {
     return {(int) (pos.x * scalarX), (int) (pos.y * scalarY)};
-}
-
-void Renderer::drawFPS(const int& fps, Font* font) {
-    currentColor = Colors::Green;
-
-    ostringstream str;
-    str << fps;
-    string s = str.str();
-    str.clear();
-
-    drawText(font, s, 10, 30, 40);
 }

@@ -1,7 +1,6 @@
 #pragma once
 
 #include <array>
-//#include "Geometry.hpp"
 
 using rgb = unsigned char;
 
@@ -44,7 +43,7 @@ class Color {
 
 class Colors {
     private:
-        Colors() {} //Wird nicht genutzt
+        Colors() {} //Isn't used
     
     public:
         static const Color Transparent;
@@ -68,16 +67,20 @@ enum BoundResult{Inside = 0, Top = 1, Left = 2, Right = 4, Bottom = 8};
 enum class BlendingMethod : char {NoBlending, ColorBlending, AlphaBlending};
 
 /**
- * Der 2D Renderer, um GUIs, HUDs und ähnliches zu rendern.
- * Er muss in folgender Weise benutzt werden:
+ * The 2D Renderer to render GUIs, HUDs etc.
+ * It works a bit like OpenGL as a state mashine.
+ * The color for drawing shapes and texts, as well as the blending method
+ * are saved and have to be set via setBlendingMethod/setColor.
+ * 
+ * The render sequence is roughly the following:
  * 1. setColor(Colors::Transparent)
  * 2. clear()
- * 3. Sämtliche Rendermethoden
- * 4. render(): Als letztes in der OpenGL Reihenfolge rendern
+ * 3. render everything
+ * 4. get the rendered data via getData() //TODO: Update docs after implementing callback rendering
  */ 
 class Renderer {
     private:
-        Color* data; //Pixeldaten
+        Color* data; //Pixel data
         Color currentColor;
         
         int isOutside(const int& x, const int& y);
@@ -93,20 +96,20 @@ class Renderer {
         Renderer() : Renderer(1920, 1080) {}
         ~Renderer();
 
-        //Rendermethoden
+        //Rendering methods
         /**
-         * Leert die Daten und setzt alle Pixel auf die aktuell gesetzte Farbe
+         * Clears the data and sets all pixels to the current color
          */ 
         void clear();
 
         /**
-         * Setzt die aktuelle Farbe
-         * @param c Die zu setzende Farbe
+         * Sets the current color for the next rendering operations
+         * @param c The new color
          */ 
         void setColor(const Color& c);
 
         /**
-         * Set the current blending method
+         * Set the current blending method for the next rendering operations
          * @param method The new method
          */ 
         void setBlendingMethod(BlendingMethod method);
@@ -125,69 +128,77 @@ class Renderer {
         Color* getData();
 
         /**
-         * Skaliert den Renderer auf eine neue Größe
-         * @param width Die neue Breite in Pixeln
-         * @param height Die neue Höhe in Pixeln
+         * Scales the renderer to a new relative size.
+         * This doesn't affect the real size of the canvas,
+         * it just affects the scalars for the getRelPos methods
+         * @param width The new relative width
+         * @param height Die new relative height
          */ 
         void resize(const int& width, const int& height);
 
         /**
-         * Gibt die eingebene Position relativ zur Renderergröße aus,
-         * damit die Koordinaten beim Skalieren des Fensters
-         * konstant bleiben
+         * Returns the relative position of the given coordinates.
+         * If the renderer is scaled, it returns the coordinates on the renderer side.
+         * An example:
+         * If the renderer was initialized as 800x600 and then scaled
+         * to a 400x300 window, the absolute (window) coordinate (1, 2) would return the
+         * relative (renderer) coordinate (2, 4). This is useful for UIs on different
+         * window sizes: The renderer renders in one size and gets scaled to the window,
+         * but the relative coordinates stay the same.
          * 
-         * @param x Die X-Koordinate der absoluten Position
-         * @param y Die Y-Koordinate der absoluten Position
-         * @returns Ein Punkt mit relativen Mauskoordinaten
+         * @param x The x-coordinate of the absolute position
+         * @param y The y-coordinate of the absolute position
+         * @returns A Point with the relative position
          */ 
         Point getRelPos(const int& x, const int& y);
 
         /**
-         * Gibt die eingebene Position relativ zur Renderergröße aus,
-         * damit die Koordinaten beim Skalieren des Fensters
-         * konstant bleiben
+         * Returns the relative position of the given position.
+         * If the renderer is scaled, it returns the coordinates on the renderer side.
+         * An example:
+         * If the renderer was initialized as 800x600 and then scaled
+         * to a 400x300 window, the absolute (window) coordinates (1, 2) would return the
+         * relative (renderer) coordinates (2, 4). This is useful for UIs on different
+         * window sizes: The renderer renders in one size and gets scaled to the window,
+         * but the relative coordinates stay the same.
          * 
-         * @param pos Die absolute Position
-         * @returns Ein Punkt mit relativen Mauskoordinaten
+         * @param pos The absolute position
+         * @returns A Point with the relative position
          */ 
         Point getRelPos(const Point& pos);
 
         /**
-         * Zeichnet den Rand eines Rechtecks mit der ausgewählten Farbe
+         * Draws the outline of a rect with the current color and blending mode
          * 
-         * @param rect Das zu zeichnende Rechteck
-         * @param linesize Die Breite der Linien
+         * @param rect The rect
+         * @param linesize The width of the outlines
          */ 
         void drawRect(const Rect& rect, const int& linesize = 1);
 
         /**
-         * Zeichnet ein gefülltes Rechteck mit der ausgewählten Farbe
+         * Draws a filled rect with the current color and blending mode
          * 
-         * @param rect Das zu zeichnende Rechteck
+         * @param rect The rect
          */ 
         void fillRect(const Rect& rect);
 
         /**
-         * Zeichnet eine Textur (oder Teile davon)
-         * @param texture Die zu kopierende Textur
-         * @param src Der Ausschnitt der Textur, der kopiert werden soll, oder Rect::emptyRect für die ganze Textur
-         * @param dest Der Ausschnitt des Bildes, in den kopiert werden soll, oder Rect::emptyRect für das ganze Bild
+         * Draws a texture (or a part of it) with the current blending method
+         * @param texture The texture
+         * @param src The part of the texture that should be copied, or Rect::emptyRect/NULL for the whole texture
+         * @param dest The part of the canvas that should be copied into, or Rect::emptyRect/NULL for the entire canvas
          */ 
         void drawTexture(Texture* texture, const Rect& src, const Rect& dest);
 
+        //TODO: Update docs for text when more font methods are implemented
         /**
-         * Rendert UTF-32 Text mit der ausgewählten Farbe
-         * @param font Der Font, der den Text darstellen soll
-         * @param text Der UTF-32 Text
-         * @param x Der x-Wert der oberen linken Ecke
-         * @param y Der y-Wert der oberen linken Ecke
-         * @param size Die Schriftgröße in Pixeln
-         * @param charSpacing Der Abstand zwischen zwei Buchstaben in Pixeln (Standardmäßig 1/10 der Schriftgröße)
+         * Draws UTF-32 text with the current color and blending mode
+         * @param font The font to display the text
+         * @param text The UTF-32 text
+         * @param x The x-coordinate
+         * @param y The y-coordinate
+         * @param size The size (pixel)
+         * @param charSpacing The spacing between two charakters (normally 1/10 of the size)
          */ 
         void drawText(Font* font, const String32& text, const int& x, const int& y, const int& size, int charSpacing = -1);
-
-        /**
-         * Rendert die aktuellen FPS in die obere Linke Ecke mit der ausgewählten Farbe
-         */ 
-        void drawFPS(const int& fps, Font* font);
 };

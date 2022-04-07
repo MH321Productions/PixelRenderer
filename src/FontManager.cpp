@@ -5,8 +5,8 @@
 using namespace std;
 
 FontManager::FontManager() {
-    //FreeType initialisieren
-    isInitialized = checkFTError(FT_Init_FreeType(&library), "Konnte FreeType nicht initialisieren");
+    //init FreeType
+    isInitialized = checkFTError(FT_Init_FreeType(&library), "Couldn't initialize FreeType");
 }
 
 FontManager::~FontManager() {
@@ -16,8 +16,8 @@ FontManager::~FontManager() {
 
     loadedFonts.clear();
 
-    //FreeType stoppen
-    checkFTError(FT_Done_FreeType(library), "Konnte FreeType nicht beenden");
+    //stop FreeType
+    checkFTError(FT_Done_FreeType(library), "Couldn't stop FreeType");
 }
 
 void FontManager::removeFont(Font* font) {

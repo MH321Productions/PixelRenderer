@@ -6,7 +6,6 @@
 
 using rgb = unsigned char;
 
-struct SDL_Surface;
 class Color;
 
 class TextureManager;

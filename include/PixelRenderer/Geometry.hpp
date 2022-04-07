@@ -15,14 +15,14 @@ class Rect {
         Rect(const int& x, const int& y, const int& width, const int& height) : x(x), y(y), width(width), height(height) {}
 
         /**
-         * Initialisiert das Rechteck als ungültig
+         * Initialize the rect as invalid
          */ 
         Rect() : x(0), y(0), width(0), height(0) {}
         
         /**
-         * Ermöglicht das Aufrufen mit NULL in Funktionen (Ähnlich wie in SDL)
+         * Initialize an invalid rect with a pointer (You can use NULL as a parameter in functions, like in SDL)
          * 
-         * @param null Ein Pointer (NULL/nullptr vorgesehen)
+         * @param null a pointer (NULL/nullptr normally)
          */ 
         Rect(const void* null) : x(0), y(0), width(0), height(0) {}
 
@@ -30,5 +30,8 @@ class Rect {
         bool isInside(const int& x, const int& y);
         bool isInside(const Point& p);
 
+        /**
+         * An invalid rect. You can use this instead of giving NULL as a parameter in functions
+         */ 
         static const Rect emptyRect;
 };

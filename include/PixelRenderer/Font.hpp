@@ -33,21 +33,21 @@ class Font {
         ~Font();
 
         /**
-         * Ändert die Größe des Fonts
-         * @param width Die Breite in Pixeln
-         * @param height Die Höhe in Pixeln
-         * @returns Ob das Skalieren erfolgreich war
+         * Changes the size of the font
+         * @param width The width (pixel)
+         * @param height The height (pixel)
+         * @returns If the scaling was successfull
          */ 
         bool setSize(const int& width, const int& height);
         
         /**
-         * Ändert die Größe des Fonts
-         * @param size Die Größe (Breite und Höhe) in Pixeln
-         * @returns Ob das Skalieren erfolgreich war
+         * Changes the size of the font
+         * @param size The width and height (pixel)
+         * @returns If the scaling was successfull
          */ 
         inline bool setSize(const int& size) {return setSize(size, size);}
 
-        //entspricht isLoaded && hasUnicode
+        //equivalent to: isLoaded && hasUnicode
         inline bool isReady() {return isLoaded && hasUnicode;}
 };
 
@@ -69,13 +69,13 @@ class FontManager {
         Font* getFont(const LoadInfo& info);
 
         /**
-         * Prüft den Rückgabewert einer FreeType-Funktion und gibt bei Bedarf eine Fehlermeldung in cerr aus.
-         * Diese Meldung hat folgendes Muster:
+         * Checks the return value of a FreeType-function and sends an error message to cerr if needed.
+         * The message looks like this:
          * "<errorMessage>: <FreeType errorMessage>"
-         * @param error Der Fehlercode, der von der FreeType-Funktion genereiert wurde
-         * @param errorMessage Die Nachricht, die bei einem Fehler zusammen mit der Fehlermeldung geschrieben wird
-         * (Standardmäßig "FreeType Fehler")
-         * @returns Ob die Funktion fehlerfrei ausgeführt wurde (false bei irgendeinem Fehler)
+         * @param error The return value of the function
+         * @param errorMessage The message to send with the FreeType error message
+         * (normally "FreeType error")
+         * @returns If the function was executed successfully (any error returns false)
          */ 
-        static bool checkFTError(const int& error, const std::string& errorMessage = "FreeType Fehler");
+        static bool checkFTError(const int& error, const std::string& errorMessage = "FreeType error");
 };

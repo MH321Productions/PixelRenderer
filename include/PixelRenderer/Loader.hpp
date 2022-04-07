@@ -3,9 +3,9 @@
 #include <string>
 
 /**
- * Eine Util-Klasse zum Laden von Fonts und Texturen
- * So kann man entweder aus einer Datei oder aus dem Speicher laden
- * (Dabei hat der Speicher eine höhere Priorität als die Dateien)
+ * A util class to load fonts and textures
+ * With this, You can load from disk as well as from the memory
+ * (In case of a conflict, the memory has higher priority)
  */ 
 class LoadInfo {
     public:

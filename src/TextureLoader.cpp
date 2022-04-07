@@ -11,7 +11,7 @@ Texture* Texture::loadTexture(const LoadInfo& info, TextureManager* manager) {
     int width, height, channels;
 
     if (!info.isValid()) {
-        cerr << "Die LoadInfo ist ungültig und führt zu keiner Textur" << endl;
+        cerr << "The load info is invalid" << endl;
         return NULL;
     }
 
@@ -23,7 +23,7 @@ Texture* Texture::loadTexture(const LoadInfo& info, TextureManager* manager) {
     }
 
     if (!stbiData) {
-        cerr << "Konnte Textur nicht laden" << endl;
+        cerr << "Couldn't load image: " << stbi_failure_reason() << endl;
         return NULL;
     }
 

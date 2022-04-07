@@ -7,7 +7,7 @@ using namespace std;
 
 Texture* TextureManager::getTexture(const LoadInfo& info) {
     for (Texture* t: loadedTextures) {
-        if (t->info == info) return t; //Temporär
+        if (t->info == info) return t; //Temporary
     }
 
     Texture* load = Texture::loadTexture(info, this);
@@ -17,13 +17,13 @@ Texture* TextureManager::getTexture(const LoadInfo& info) {
 }
 
 TextureManager::~TextureManager() {
-    blockRemoval = true; //Damit sich die Texturen nicht direkt aus der Liste entfernen können
+    blockRemoval = true; //The textures can't remove themselves
 
     for (Texture* t: loadedTextures) delete t;
 
     loadedTextures.clear();
 
-    cout << "TextureManager gelöscht" << endl;
+    //cout << "Deleted TextureManager" << endl;
 }
 
 void TextureManager::removeTexture(Texture* texture) {
