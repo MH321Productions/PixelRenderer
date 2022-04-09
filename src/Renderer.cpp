@@ -39,14 +39,18 @@ Color& Renderer::at(const int& x, const int& y) {
 }
 
 void Renderer::setPixel(const int& x, const int& y, const Color& c) {
-    if (c.a == 255 || blending == BlendingMethod::NoBlending) at(x, y) = c;
-    else if (!c.a) return;
-    else {
-        double gray = c.a / 255.0, invertGray = (255 - c.a) / 255.0;
-        Color& pixel = at(x, y);
-        pixel *= invertGray;
+    if (blending == BlendingMethod::NoBlending) {
+        at(x, y) = c;
+        return;
+    }
+
+    Color& pixel = at(x, y);
+    double gray = c.a / 255.0, invertGray = (255 - c.a) / 255.0;
+    if (blending == BlendingMethod::ColorBlending) {
         pixel += (c * gray);
-        if (blending == BlendingMethod::ColorBlending) pixel.a = 255;
+    } else if (blending == BlendingMethod::AlphaBlending) {
+        pixel = (pixel * invertGray) + (c * gray);
+        pixel.a = 255;
     }
 }
 

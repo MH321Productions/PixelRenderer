@@ -10,13 +10,13 @@ const Color Colors::Yellow(0xFF, 0xFF, 0, 0xFF);
 const Color Colors::Magenta(0xFF, 0, 0xFF, 0xFF);
 
 Color::Color(const int& r, const int& g, const int& b, const int& a) {
-    checkValue(r, Color::r);
-    checkValue(g, Color::g);
-    checkValue(b, Color::b);
-    checkValue(a, Color::a);
+    setValue(r, Color::r);
+    setValue(g, Color::g);
+    setValue(b, Color::b);
+    setValue(a, Color::a);
 }
 
-void Color::checkValue(const int& input, rgb& rgba) {
+void Color::setValue(const int& input, rgb& rgba) {
     if (input < 0) rgba = 0;
     else if (input > 0xFF) rgba = 0xFF;
     else rgba = (rgb) input;
@@ -49,19 +49,19 @@ Color Color::operator + (const Color& c) const {
 }
 
 Color& Color::operator += (Color& c) {
-    checkValue(r += c.r, r);
-    checkValue(g += c.g, g);
-    checkValue(b += c.b, b);
-    checkValue(a += c.a, a);
+    setValue(r + c.r, r);
+    setValue(g + c.g, g);
+    setValue(b + c.b, b);
+    setValue(a + c.a, a);
 
     return *this;
 }
 
 Color& Color::operator += (const Color& c) {
-    checkValue(r += c.r, r);
-    checkValue(g += c.g, g);
-    checkValue(b += c.b, b);
-    checkValue(a += c.a, a);
+    setValue(r + c.r, r);
+    setValue(g + c.g, g);
+    setValue(b + c.b, b);
+    setValue(a + c.a, a);
 
     return *this;
 }
@@ -71,10 +71,10 @@ Color Color::operator - (Color& c) const {
 }
 
 Color& Color::operator -= (Color& c) {
-    checkValue(r -= c.r, r);
-    checkValue(g -= c.g, g);
-    checkValue(b -= c.b, b);
-    checkValue(a -= c.a, a);
+    setValue(r - c.r, r);
+    setValue(g - c.g, g);
+    setValue(b - c.b, b);
+    setValue(a - c.a, a);
 
     return *this;
 }
@@ -84,10 +84,10 @@ Color Color::operator * (const rgb& scalar) const {
 }
 
 Color& Color::operator *= (const rgb& scalar) {
-    checkValue(r * scalar, r);
-    checkValue(g * scalar, g);
-    checkValue(b * scalar, b);
-    checkValue(a * scalar, a);
+    setValue(r * scalar, r);
+    setValue(g * scalar, g);
+    setValue(b * scalar, b);
+    setValue(a * scalar, a);
 
     return *this;
 }
@@ -97,10 +97,10 @@ Color Color::operator / (const rgb& scalar) const {
 }
 
 Color& Color::operator /= (const rgb& scalar) {
-    checkValue(r / scalar, r);
-    checkValue(g / scalar, g);
-    checkValue(b / scalar, b);
-    checkValue(a / scalar, a);
+    setValue(r / scalar, r);
+    setValue(g / scalar, g);
+    setValue(b / scalar, b);
+    setValue(a / scalar, a);
 
     return *this;
 }
@@ -110,10 +110,10 @@ Color Color::operator * (const double& scalar) const {
 }
 
 Color& Color::operator *= (const double& scalar) {
-    checkValue(r * scalar, r);
-    checkValue(g * scalar, g);
-    checkValue(b * scalar, b);
-    checkValue(a * scalar, a);
+    setValue(r * scalar, r);
+    setValue(g * scalar, g);
+    setValue(b * scalar, b);
+    setValue(a * scalar, a);
 
     return *this;
 }
@@ -123,10 +123,10 @@ Color Color::operator / (const double& scalar) const {
 }
 
 Color& Color::operator /= (const double& scalar) {
-    checkValue(r / scalar, r);
-    checkValue(g / scalar, g);
-    checkValue(b / scalar, b);
-    checkValue(a / scalar, a);
+    setValue(r / scalar, r);
+    setValue(g / scalar, g);
+    setValue(b / scalar, b);
+    setValue(a / scalar, a);
 
     return *this;
 }

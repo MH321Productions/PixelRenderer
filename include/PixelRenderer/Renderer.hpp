@@ -11,9 +11,6 @@ class Point;            //2D/Geometry.hpp
 class Rect;             //2D/Geometry.hpp
 
 class Color {
-    private:
-        void checkValue(const int& input, rgb& rgba);
-
     public:
         rgb r, g, b, a;
 
@@ -22,6 +19,8 @@ class Color {
         Color(const Color& c) : r(c.r), g(c.g), b(c.b), a(c.a) {}
         Color(Color& c) : r(c.r), g(c.g), b(c.b), a(c.a) {}
         Color() : r(0), g(0), b(0), a(0) {}
+
+        void setValue(const int& input, rgb& rgba);
 
         Color& operator = (const Color& c);
         Color& operator = (Color& c);
