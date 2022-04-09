@@ -70,7 +70,7 @@ int AnimationTest::onExecute() {
 
     if (!result && !createVideo()) result = 303; //Return value 303: Couldn't create video
 
-    if (!result && !createVideoParts(2)) result = 304; //Return value 304: couldn't create parts
+    if (!result && !createVideoParts(3)) result = 304; //Return value 304: couldn't create parts
 
     cleanup();
 
