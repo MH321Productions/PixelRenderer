@@ -77,7 +77,7 @@ void Renderer::drawRect(const Rect& rect, const int& linesize) {
 
             //Draw
             if (lineOffsetX < linesize || lineOffsetY < linesize || lineOffsetX >= maxLinesizeX || lineOffsetY >= maxLinesizeY) {
-                at(x, y) = currentColor;
+                setPixel(x, y, currentColor);
             }
 
             lineOffsetX++;
@@ -103,7 +103,7 @@ void Renderer::fillRect(const Rect& rect) {
             if (boundResult & BoundResult::Left) continue;
 
             //Draw
-            at(x, y) = currentColor;
+            setPixel(x, y, currentColor);
         }
     }
 }
