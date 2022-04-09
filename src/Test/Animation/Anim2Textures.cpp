@@ -12,7 +12,7 @@ Rect texCheck {975, 290, 18, 18};
 void AnimationTest::renderTextures(const int& image) {
     //description texts
     renderer->setColor(Colors::Green);
-    renderer->setBlendingMethod(BlendingMethod::ColorBlending);
+    renderer->setBlendingMethod(BlendingMethod::AlphaBlending);
     renderer->drawText(robotoFont, texDescription, 20, 120, 150);
     renderer->drawText(robotoFont, texFile, 400, 240, 100);
     renderer->drawText(robotoFont, texMem, 1275, 240, 100);

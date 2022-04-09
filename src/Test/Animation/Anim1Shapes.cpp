@@ -8,7 +8,7 @@ int fillOffset, lineRectSize;
 
 void AnimationTest::renderShapes(const int& image) {
     renderer->setColor(Colors::Green);
-    renderer->setBlendingMethod(BlendingMethod::ColorBlending);
+    renderer->setBlendingMethod(BlendingMethod::AlphaBlending);
     renderer->drawText(robotoFont, description, 80, 150, 180);
     renderer->setBlendingMethod(BlendingMethod::NoBlending);
 

@@ -17,7 +17,7 @@ Color c(0xFF, 0, 0, 0);
 
 void AnimationTest::renderBlending(const int& image) {
     renderer->setColor(Colors::Green);
-    renderer->setBlendingMethod(BlendingMethod::ColorBlending);
+    renderer->setBlendingMethod(BlendingMethod::AlphaBlending);
     renderer->drawText(robotoFont, blendDescription, 80, 140, 150);
     renderer->drawText(robotoFont, blendNoBlending, 70, 280, 80);
     renderer->drawText(robotoFont, blendColor, 690, 280, 80);
@@ -30,8 +30,8 @@ void AnimationTest::renderBlending(const int& image) {
     renderer->fillRect(blendTableUp);
 
     //Figures
-    double alpha = Functions::linUp(image, 60) * 255;
-    c.a = (int) alpha;
+    double alpha = Functions::linUp(image, 55) * 255;
+    c.setValue((int) alpha, c.a);
     renderer->setColor(c);
 
     renderer->setBlendingMethod(BlendingMethod::NoBlending);
