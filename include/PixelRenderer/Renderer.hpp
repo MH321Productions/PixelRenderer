@@ -55,13 +55,14 @@ class Colors {
         static const Color Magenta;
 };
 
+//Internal
 enum BoundResult{Inside = 0, Top = 1, Left = 2, Right = 4, Bottom = 8};
 
 /**
  * Contains the three different blending methods:
- * 1. NoBlending: No blending at all
- * 2. ColorBlending: Only blend the color, the alpha value will be set to 255
- * 3. AlphaBlending: Blend the color and alpha values
+ * 1. NoBlending: No blending at all, just overwrite the pixel
+ * 2. ColorBlending: Add the new color to the old color
+ * 3. AlphaBlending: Blend between the old color and the new color
  */ 
 enum class BlendingMethod : char {NoBlending, ColorBlending, AlphaBlending};
 
