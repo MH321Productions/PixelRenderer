@@ -54,10 +54,22 @@ void Renderer::setPixel(const int& x, const int& y, const Color& c) {
     }
 }
 
-int Renderer::getScaledPixel(const int& pixel, const double& scalar) {
-    double scaled = pixel * scalar;
-    
-    return (int) scaled;
+inline int Renderer::getScaledPixel(const int& pixel, const double& scalar) {
+    return (int) (pixel * scalar);
+}
+
+inline int Renderer::getRepeatedPixel(const int& pixel, const int& srcBounds) {
+    return pixel % srcBounds;
+}
+
+Point Renderer::getRepeatedPixel(Texture* texture, const Rect& src, const int& x, const int& y,
+const double& scX, const double& scY, RepetitionMode mode) {
+    switch (mode) {
+        case X: return {getRepeatedPixel(x, src.width), getScaledPixel(y, scY)};
+        case Y: return {getScaledPixel(x, scX), getRepeatedPixel(y, src.height)};
+        case XY: return {getRepeatedPixel(x, src.width), getRepeatedPixel(y, src.height)};
+        default: return {getScaledPixel(x, scX), getScaledPixel(y, scY)}; // Shouldn't be called, but just to be sure ;)
+    }
 }
 
 void Renderer::drawRect(const Rect& rect, const int& linesize) {
@@ -148,6 +160,50 @@ void Renderer::drawTexture(Texture* texture, const Rect& src, const Rect& dest) 
             newY = getScaledPixel(y + rSrc.y, scY);
             if (texture->isOutside(newX, newY)) continue;//at(x + rDest.x, y + rDest.y) = Colors::Transparent;
             else setPixel(x + rDest.x, y + rDest.y, texture->at(newX, newY));
+        }
+    }
+}
+
+void Renderer::drawRepeatingTexture(Texture* texture, const Rect& src, const Rect& dest, RepetitionMode mode) {
+    if (mode == None) { //Redirect to normal drawTexture method
+        drawTexture(texture, src, dest);
+        return;
+    }
+
+    Rect rSrc, rDest;
+
+    //Test if src is valid, or else 0, 0, width, height
+    if (src.isValid()) rSrc = src;
+    else rSrc = {0, 0, texture->width, texture->height};
+
+    //Test if dest is valid, or else 0, 0, renderWidth, renderHeight
+    if (dest.isValid()) rDest = dest;
+    else rDest = {0, 0, width, height};
+
+    //If the rect is outside the canvas, abort
+    if (isOutside(rDest.x, rDest.y) && isOutside(rDest.x + rDest.width, rDest.y + rDest.height)) return;
+
+    //calculate scalars
+    double scX = (double) rSrc.width / (double) rDest.width;
+    double scY = (double) rSrc.height / (double) rDest.height;
+
+    //scaled/repeated pixel
+    Point pixel;
+
+    int boundResult;
+    for (int y = 0; y < rDest.height; y++) {
+        for (int x = 0; x < rDest.width; x++) {
+            //Test for boundaries
+            boundResult = isOutside(x + rDest.x, y + rDest.y);
+            //Right, below, or above the canvas -> next line
+            //Left of the canvas -> next pixel
+            if (boundResult & BoundResult::Bottom || boundResult & BoundResult::Top || boundResult & BoundResult::Right) break;
+            if (boundResult & BoundResult::Left) continue;
+
+            //Draw
+            pixel = getRepeatedPixel(texture, rSrc, x, y, scX, scY, mode);
+            if (texture->isOutside(pixel.x, pixel.y)) continue;//at(x + rDest.x, y + rDest.y) = Colors::Transparent;
+            else setPixel(x + rDest.x, y + rDest.y, texture->at(pixel.x, pixel.y));
         }
     }
 }

@@ -67,6 +67,15 @@ enum BoundResult{Inside = 0, Top = 1, Left = 2, Right = 4, Bottom = 8};
 enum class BlendingMethod : char {NoBlending, ColorBlending, AlphaBlending};
 
 /**
+ * Contains the three different repetition modes:
+ * 1. X: only repeat the horizontal pixels, scale the vertical ones, if necessary
+ * 2. Y: only repeat the vertical pixels, scale the horizontal ones, if necessary
+ * 3: XY: repeat both horizontal and vertical pixels, equivalent to (X | Y)
+ * The None option scales all pixels (it just redirects to drawTexture)
+ */ 
+enum RepetitionMode: char {None, X, Y, XY};
+
+/**
  * The 2D Renderer to render GUIs, HUDs etc.
  * It works a bit like OpenGL as a state mashine.
  * The color for drawing shapes and texts, as well as the blending method
@@ -85,7 +94,11 @@ class Renderer {
         
         int isOutside(const int& x, const int& y);
         Color& at(const int& x, const int& y);
-        int getScaledPixel(const int& pixel, const double& scalar);
+        inline int getScaledPixel(const int& pixel, const double& scalar);
+        inline int getRepeatedPixel(const int& pixel, const int& srcBounds);
+        Point getRepeatedPixel(Texture* texture, const Rect& src, const int& x, const int& y,
+            const double& scX, const double& scY, RepetitionMode mode);
+        
         double scalarX, scalarY;
         BlendingMethod blending;
 
@@ -189,6 +202,15 @@ class Renderer {
          * @param dest The part of the canvas that should be copied into, or Rect::emptyRect/NULL for the entire canvas
          */ 
         void drawTexture(Texture* texture, const Rect& src, const Rect& dest);
+
+        /**
+         * Draws a texture (or a part of it) with the current blending method and given repetition mode
+         * @param texture The texture
+         * @param src The part of the texture that should be copied, or Rect::emptyRect/NULL for the whole texture
+         * @param dest The part of the canvas that should be copied into, or Rect::emptyRect/NULL for the entire canvas
+         * @param mode The repetition mode
+         */  
+        void drawRepeatingTexture(Texture* texture, const Rect& src, const Rect& dest, RepetitionMode mode);
 
         //TODO: Update docs for text when more font methods are implemented
         /**
