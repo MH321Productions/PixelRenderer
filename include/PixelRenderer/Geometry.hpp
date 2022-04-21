@@ -26,7 +26,7 @@ class Rect {
          */ 
         Rect(const void* null) : x(0), y(0), width(0), height(0) {}
 
-        inline bool isValid() const {return x > 0 && y > 0 && width > 0 && height > 0;}
+        inline bool isValid() const {return x >= 0 && y >= 0 && width > 0 && height > 0;}
         bool isInside(const int& x, const int& y);
         bool isInside(const Point& p);
 
