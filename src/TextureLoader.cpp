@@ -31,14 +31,14 @@ Texture* Texture::loadTexture(const LoadInfo& info, TextureManager* manager) {
 
     int x = 0, y = 0, maxIndex = width * height * channels;
     Color c;
-    if (channels == 4) {
+    if (channels == 4) { //4 channels, RGBA32
         for (int index = 0; index < maxIndex; index+= 4) {
             c.r = stbiData[index];
             c.g = stbiData[index + 1];
             c.b = stbiData[index + 2];
             c.a = stbiData[index + 3];
 
-            //Daten schreiben
+            //write data
             result->at(x, y) = c;
             x++;
             if (x == width) {
@@ -46,14 +46,14 @@ Texture* Texture::loadTexture(const LoadInfo& info, TextureManager* manager) {
                 y++;
             }
         }
-    } else { //3 Channel, alpha Wert immer 255
+    } else if (channels == 3) { //3 channels, RGB24
         c.a = 255;
         for (int index = 0; index < maxIndex; index+= 3) {
             c.r = stbiData[index];
             c.g = stbiData[index + 1];
             c.b = stbiData[index + 2];
 
-            //Daten schreiben
+            //write data
             result->at(x, y) = c;
             x++;
             if (x == width) {
@@ -61,6 +61,40 @@ Texture* Texture::loadTexture(const LoadInfo& info, TextureManager* manager) {
                 y++;
             }
         }
+    } else if (channels == 2) { //2 channels, grayscale and alpha
+        for (int index = 0; index < maxIndex; index+= 2) {
+            c.r = stbiData[index];
+            c.g = stbiData[index];
+            c.b = stbiData[index];
+            c.a = stbiData[index + 1];
+
+            //write data
+            result->at(x, y) = c;
+            x++;
+            if (x == width) {
+                x = 0;
+                y++;
+            }
+        }
+    } else if (channels == 1) { //1 channel, grayscale
+        c.a = 255;
+        for (int index = 0; index < maxIndex; index++) {
+            c.r = stbiData[index];
+            c.g = stbiData[index];
+            c.b = stbiData[index];
+
+            //write data
+            result->at(x, y) = c;
+            x++;
+            if (x == width) {
+                x = 0;
+                y++;
+            }
+        }
+    } else { //either no channels or too many channels. Abort and return null
+        delete result;
+        result = NULL;
+        cerr << "Couldn't read image into texture: " << channels << " channels provided, 1-4 expected." << endl;
     }
 
     stbi_image_free(stbiData);
