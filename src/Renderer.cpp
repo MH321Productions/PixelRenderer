@@ -156,8 +156,8 @@ void Renderer::drawTexture(Texture* texture, const Rect& src, const Rect& dest) 
             if (boundResult & BoundResult::Left) continue;
 
             //Draw
-            newX = getScaledPixel(x + rSrc.x, scX);
-            newY = getScaledPixel(y + rSrc.y, scY);
+            newX = getScaledPixel(x, scX) + rSrc.x;
+            newY = getScaledPixel(y, scY) + rSrc.y;
             if (texture->isOutside(newX, newY)) continue;//at(x + rDest.x, y + rDest.y) = Colors::Transparent;
             else setPixel(x + rDest.x, y + rDest.y, texture->at(newX, newY));
         }
