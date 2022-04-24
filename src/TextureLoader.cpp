@@ -32,7 +32,7 @@ Texture* Texture::loadTexture(const LoadInfo& info, TextureManager* manager) {
     int x = 0, y = 0, maxIndex = width * height * channels;
     Color c;
     if (channels == 4) { //4 channels, RGBA32
-        for (int index = 0; index < maxIndex; index+= 4) {
+        for (int index = 0; index < maxIndex; index += 4) {
             c.r = stbiData[index];
             c.g = stbiData[index + 1];
             c.b = stbiData[index + 2];
@@ -48,7 +48,7 @@ Texture* Texture::loadTexture(const LoadInfo& info, TextureManager* manager) {
         }
     } else if (channels == 3) { //3 channels, RGB24
         c.a = 255;
-        for (int index = 0; index < maxIndex; index+= 3) {
+        for (int index = 0; index < maxIndex; index += 3) {
             c.r = stbiData[index];
             c.g = stbiData[index + 1];
             c.b = stbiData[index + 2];
@@ -62,7 +62,7 @@ Texture* Texture::loadTexture(const LoadInfo& info, TextureManager* manager) {
             }
         }
     } else if (channels == 2) { //2 channels, grayscale and alpha
-        for (int index = 0; index < maxIndex; index+= 2) {
+        for (int index = 0; index < maxIndex; index += 2) {
             c.r = stbiData[index];
             c.g = stbiData[index];
             c.b = stbiData[index];
