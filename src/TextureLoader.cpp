@@ -17,7 +17,7 @@ Texture* Texture::loadTexture(const LoadInfo& info, TextureManager* manager) {
 
     rgb* stbiData;
     if (info.usePath()) {
-        stbiData = stbi_load(info.path.c_str(), &width, &height, &channels, 4);
+        stbiData = stbi_load(info.path.c_str(), &width, &height, &channels, 0);
     } else if (info.useMemory()) {
        stbiData = stbi_load_from_memory(info.data, info.size, &width, &height, &channels, 4);
     }
