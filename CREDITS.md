@@ -33,7 +33,12 @@ The Future Font is part of the
 
 ## Images
 
-All images are part of the
+The fruit bowl image is from
+[Pixabay](https://pixabay.com/photos/fruits-fresh-bowl-assorted-1600023/).
+It is licensed under the
+[Pixabay License](https://pixabay.com/service/license/).
+
+All other images are part of the
 [UI Pack](https://kenney.nl/assets/ui-pack) from
 [Kenney](https://kenney.nl). They are licenced by the
 [CC0 1.0 Universal](https://creativecommons.org/publicdomain/zero/1.0/) license.
