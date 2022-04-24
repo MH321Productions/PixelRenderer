@@ -181,11 +181,11 @@ bool AnimationTest::initRenderer() {
     futureFont = fontMan->getFont({Kenney_Future_ttf, Kenney_Future_ttf_len});
     if (!futureFont->isLoaded) return false;
 
-    cross = textureMan->getTexture({"res/RedCross.png"});
+    cross = textureMan->getTexture({"res/Fruits.jpg"});
     if (!cross) { //Testing for up to 2 directories above the current directory
-        cross = textureMan->getTexture({"../res/RedCross.png"});
+        cross = textureMan->getTexture({"../res/Fruits.jpg"});
         if (!cross) {
-            cross = textureMan->getTexture({"../../res/RedCross.png"});
+            cross = textureMan->getTexture({"../../res/Fruits.jpg"});
             if (!cross) return false;
         }
     }
