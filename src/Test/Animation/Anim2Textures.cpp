@@ -27,18 +27,23 @@ void AnimationTest::renderTextures(const int& image) {
     double scaleX, scaleY;
 
     //file
-    renderer->drawTexture(cross, texFruitSrc, texFruitDest);
+    scaleX = Functions::linDown(image, 60);
+    texFruitSrc.x = 2080 - (scaleX * 1589);
+    texFruitSrc.y = 1694 - (scaleX * 1694);
+    texFruitSrc.width = 935 + (scaleX * 2978);
+    texFruitSrc.height = 780 + (scaleX * 2484);
+    renderer->drawTexture(cross, texFruitSrc, texFruitDest);    
 
     //memory
     if (image < 30) {
         scaleX = Functions::linUp(image, 30) * 910;
         scaleY = scaleX / 3.0;
-        texCheck.width = (int) scaleX;
-        texCheck.height = (int) scaleY;
+        texCheck.width = 21 + (int) scaleX;
+        texCheck.height = 20 + (int) scaleY;
     } else {
         scaleY = Functions::linUp(image - 30, 30) * 456.66666666666666 + 303.3333333333333;
-        texCheck.width = 910;
-        texCheck.height = (int) scaleY;
+        texCheck.width = 931;
+        texCheck.height = 20 + (int) scaleY;
     }
     renderer->drawTexture(check, Rect::emptyRect, texCheck);
 }
