@@ -59,48 +59,6 @@ int AnimationTest::onExecute() {
     //Create videos
     if (!result && !createVideoParts()) result = 4; //Return value 304: couldn't create parts
 
-
-    /*for (int index = 0; index < 300; index++) {
-        cout << "Rendering frame " << index << endl;
-        renderer->setColor(Colors::Blue);
-        renderer->clear();
-
-        //Choose animation method
-        switch (index / 60) {
-            case 0: 
-                animFunc = &AnimationTest::renderShapes;
-                break;
-            case 1:
-                animFunc = &AnimationTest::renderTextures;
-                break;
-            case 2:
-                animFunc = &AnimationTest::renderBlending;
-                break;
-            case 3:
-                animFunc = &AnimationTest::renderRepetition;
-                break;
-            case 4:
-                animFunc = &AnimationTest::renderFonts;
-                break;
-            default:
-                animFunc = &AnimationTest::renderNothing;
-        }
-
-        //Actually call it
-        (this->*animFunc)(index % 60);
-
-        //Save rendered image
-        if (!saveImage(index)) {
-            cerr << "couldn't save image " << index << ". Abort" << endl;
-            result = 3;
-            break;
-        }
-    }
-
-    //if (!result && !createVideo()) result = 303; //Return value 303: Couldn't create video
-
-    if (!result && !createVideoParts()) result = 4; //Return value 304: couldn't create parts*/
-
     cleanup();
 
     return result;
