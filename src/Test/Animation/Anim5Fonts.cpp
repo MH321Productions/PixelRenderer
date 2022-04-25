@@ -1,5 +1,6 @@
 #include "AnimTest.hpp"
+#include "AnimPart.hpp"
 
-void AnimationTest::renderFonts(const int& image) {
+void PartFont::renderPart(const int& image) {
     
 }

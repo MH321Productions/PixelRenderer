@@ -1,37 +1,39 @@
+#pragma once
+
 #include <iostream>
 #include <string>
+#include <vector>
 
 #include "PixelRenderer/Renderer.hpp"
 #include "PixelRenderer/Font.hpp"
 #include "PixelRenderer/Texture.hpp"
 
+class Part;
+
+/**
+ * Main Class for the animation
+ */ 
 class AnimationTest {
     private:
-        Renderer* renderer;
-        FontManager* fontMan;
-        TextureManager* textureMan;
-        Font* robotoFont;
-        Font* futureFont;
-        Texture* cross, *check;
-    
-        //Animation parts
-        void renderShapes(const int& image);
-        void renderTextures(const int& image);
-        void renderBlending(const int& image);
-        void renderRepetition(const int& image);
-        void renderFonts(const int& image);
+        std::vector<Part*> parts;
 
         //Internal methods
         std::string getFilename(const int& image);
         bool saveImage(const int& image);
         bool createImageFolder();
-        void renderNothing(const int& image) {} //just for safety
         bool initRenderer();
         void cleanup();
-        bool createVideo();
-        bool createVideoParts(const int& partCount);
+        bool createVideoParts();
+        void registerPart(Part* part);
 
     public:
+        Renderer* renderer;
+        FontManager* fontMan;
+        TextureManager* textureMan;
+        Font* robotoFont;
+        Font* futureFont;
+        Texture* fruit, *check;
+
         int onExecute();
 };
 

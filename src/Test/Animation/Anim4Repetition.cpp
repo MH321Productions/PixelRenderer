@@ -1,5 +1,6 @@
 #include "AnimTest.hpp"
+#include "AnimPart.hpp"
 
-void AnimationTest::renderRepetition(const int& image) {
+void PartRepetition::renderPart(const int& image) {
     
 }

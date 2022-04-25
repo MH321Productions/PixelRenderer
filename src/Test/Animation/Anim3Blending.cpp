@@ -1,4 +1,5 @@
 #include "AnimTest.hpp"
+#include "AnimPart.hpp"
 #include "PixelRenderer/Unicode.hpp"
 #include "PixelRenderer/Geometry.hpp"
 
@@ -15,31 +16,31 @@ Rect blendFigColor{845, 595, 200, 200};
 Rect blendFigAlpha{1490, 595, 200, 200};
 Color c(0xFF, 0, 0, 0);
 
-void AnimationTest::renderBlending(const int& image) {
-    renderer->setColor(Colors::Green);
-    renderer->setBlendingMethod(BlendingMethod::AlphaBlending);
-    renderer->drawText(robotoFont, blendDescription, 80, 140, 150);
-    renderer->drawText(robotoFont, blendNoBlending, 70, 280, 80);
-    renderer->drawText(robotoFont, blendColor, 690, 280, 80);
-    renderer->drawText(robotoFont, blendAlpha, 1330, 280, 80);
+void PartBlend::renderPart(const int& image) {
+    anim->renderer->setColor(Colors::Green);
+    anim->renderer->setBlendingMethod(BlendingMethod::AlphaBlending);
+    anim->renderer->drawText(anim->robotoFont, blendDescription, 80, 140, 150);
+    anim->renderer->drawText(anim->robotoFont, blendNoBlending, 70, 280, 80);
+    anim->renderer->drawText(anim->robotoFont, blendColor, 690, 280, 80);
+    anim->renderer->drawText(anim->robotoFont, blendAlpha, 1330, 280, 80);
 
     //table
-    renderer->setColor(Colors::Red);
-    renderer->fillRect(blendTableLeft);
-    renderer->fillRect(blendTableRight);
-    renderer->fillRect(blendTableUp);
+    anim->renderer->setColor(Colors::Red);
+    anim->renderer->fillRect(blendTableLeft);
+    anim->renderer->fillRect(blendTableRight);
+    anim->renderer->fillRect(blendTableUp);
 
     //Figures
     double alpha = Functions::linUp(image, 55) * 255;
     c.setValue((int) alpha, c.a);
-    renderer->setColor(c);
+    anim->renderer->setColor(c);
 
-    renderer->setBlendingMethod(BlendingMethod::NoBlending);
-    renderer->fillRect(blendFigNoBlending);
+    anim->renderer->setBlendingMethod(BlendingMethod::NoBlending);
+    anim->renderer->fillRect(blendFigNoBlending);
 
-    renderer->setBlendingMethod(BlendingMethod::ColorBlending);
-    renderer->fillRect(blendFigColor);
+    anim->renderer->setBlendingMethod(BlendingMethod::ColorBlending);
+    anim->renderer->fillRect(blendFigColor);
 
-    renderer->setBlendingMethod(BlendingMethod::AlphaBlending);
-    renderer->fillRect(blendFigAlpha);
+    anim->renderer->setBlendingMethod(BlendingMethod::AlphaBlending);
+    anim->renderer->fillRect(blendFigAlpha);
 }
