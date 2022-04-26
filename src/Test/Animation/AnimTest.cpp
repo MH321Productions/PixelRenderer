@@ -181,6 +181,7 @@ bool AnimationTest::initRenderer() {
     registerPart(new PartShapes(this));
     registerPart(new PartTexture(this));
     registerPart(new PartBlend(this));
+    registerPart(new PartSprite(this));
 
     return true;
 }
