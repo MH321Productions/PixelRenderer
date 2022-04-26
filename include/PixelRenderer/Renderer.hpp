@@ -4,11 +4,12 @@
 
 using rgb = unsigned char;
 
-class Texture;          //Texture/Texture.hpp
-class Font;             //2D/Font.hpp
-class String32;         //2D/Unicode.cpp
-class Point;            //2D/Geometry.hpp
-class Rect;             //2D/Geometry.hpp
+class Texture;          //Texture.hpp
+class Font;             //Font.hpp
+class String32;         //Unicode.cpp
+class Point;            //Geometry.hpp
+class Rect;             //Geometry.hpp
+class SpriteInfo;       //Geometry.hpp
 
 class Color {
     public:
@@ -211,6 +212,16 @@ class Renderer {
          * @param mode The repetition mode
          */  
         void drawRepeatingTexture(Texture* texture, const Rect& src, const Rect& dest, RepetitionMode mode);
+
+        /**
+         * Draws a frame of a spritesheet texture with the current blending method and given frame
+         * @param texture The spritesheet texture
+         * @param dest The part of the canvas that should be copied into, or Rect::emptyRect/NULL for the entire canvas
+         * @param info The information about the spritesheet
+         * @param frame The frame that should be copied
+         * @param repeat If the animation should be repeated in case of the frame being out of bounds
+         */ 
+        void drawSpritesheet(Texture* texture, const Rect& dest, const SpriteInfo& info, const int& frame, const bool& repeat);
 
         //TODO: Update docs for text when more font methods are implemented
         /**

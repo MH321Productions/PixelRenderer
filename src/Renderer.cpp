@@ -208,6 +208,29 @@ void Renderer::drawRepeatingTexture(Texture* texture, const Rect& src, const Rec
     }
 }
 
+void Renderer::drawSpritesheet(Texture* texture, const Rect& dest, const SpriteInfo& info, const int& frame, const bool& repeat) {
+    //Check if the info is invalid
+    if (!info.isValid()) return;
+    
+    //Check if frame is out of bounds
+    int newFrame = frame;
+    if (frame < 0) {
+        if (repeat) while (newFrame < 0) newFrame += info.frames;
+        else newFrame = 0;
+    } else if (frame >= info.frames) {
+        if (repeat) newFrame = frame % info.frames;
+        else newFrame = info.frames - 1;
+    }
+    
+    //Calculate src rect of frame
+    Rect src(0, 0, info.frameWidth, info.frameHeight);
+    src.x = (newFrame % info.framesPerRow) * info.frameWidth;
+    src.y = (newFrame / info.framesPerRow) * info.frameHeight;
+
+    //Draw the texture normally with the calculated src rect
+    drawTexture(texture, src, dest);
+}
+
 void Renderer::drawText(Font* font, const String32& text, const int& x, const int& y, const int& size, int charSpacing) {
     if (text.isEmpty() || size < 1 || !font->setSize(size)) return;
 

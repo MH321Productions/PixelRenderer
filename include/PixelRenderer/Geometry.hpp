@@ -35,3 +35,24 @@ class Rect {
          */ 
         static const Rect emptyRect;
 };
+
+class SpriteInfo {
+    public:
+        //The width and height of a single frame
+        const int frameWidth, frameHeight;
+        //The number of frames in this spritesheet
+        const int frames;
+        //The number of frames in one row
+        const int framesPerRow;
+
+        SpriteInfo(const int& frameWidth, const int& frameHeight, const int& frames, const int& framesPerRow)
+        : frameWidth(frameWidth), frameHeight(frameHeight), frames(frames), framesPerRow(framesPerRow) {}
+
+        /**
+         * Returns if the info is valid, i.e.:
+         * 1. The frame width and height is > 0
+         * 2. There are >= 1 frames in the sheet
+         * 3. There are >= 1 frames in a row
+         */ 
+        bool isValid() const;
+};

@@ -13,3 +13,7 @@ bool Rect::isInside(const int& x, const int& y) {
 bool Rect::isInside(const Point& p) {
     return isInside(p.x, p.y);
 }
+
+bool SpriteInfo::isValid() const {
+    return frames && frameWidth && frameHeight && framesPerRow;
+}
