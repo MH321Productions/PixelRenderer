@@ -32,7 +32,7 @@ class AnimationTest {
         TextureManager* textureMan;
         Font* robotoFont;
         Font* futureFont;
-        Texture* fruit, *check;
+        Texture* fruit, *check, *sprite;
 
         int onExecute();
 };

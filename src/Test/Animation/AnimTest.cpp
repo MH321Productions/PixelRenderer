@@ -146,6 +146,8 @@ bool AnimationTest::createImageFolder() {
 }
 
 bool AnimationTest::initRenderer() {
+    cout << "Initializing renderer and loading resources" << endl;
+
     //Init
     renderer = new Renderer(1920, 1080); //Init renderer with native size of Full HD
     textureMan = new TextureManager;
@@ -172,6 +174,14 @@ bool AnimationTest::initRenderer() {
         if (!fruit) {
             fruit = textureMan->getTexture({"../../res/Fruits.jpg"});
             if (!fruit) return false;
+        }
+    }
+    sprite = textureMan->getTexture({"res/Trollface.png"});
+    if (!sprite) { //Testing for up to 2 directories above the current directory
+        sprite = textureMan->getTexture({"../res/Trollface.png"});
+        if (!sprite) {
+            sprite = textureMan->getTexture({"../../res/Trollface.png"});
+            if (!sprite) return false;
         }
     }
     check = textureMan->getTexture({GreenCheck_png, GreenCheck_png_len});
