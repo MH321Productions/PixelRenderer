@@ -19,21 +19,26 @@ add_library(PixelRenderer
 list(APPEND libs freetype)
 target_link_libraries(PixelRenderer PRIVATE "${libs}")
 
-#Testing
-enable_testing()
+#Testing (only if option is activated)
+option(BuildRenderTests "Builds the Rendering test programs" ON)
 
-#Stb Save and Load Test
-add_executable(StbTest src/Test/stb/stbTest.cpp)
-set_target_properties(StbTest PROPERTIES OUTPUT_NAME "PixelRenderer stb Test")
-target_link_libraries(StbTest PRIVATE PixelRenderer)
-add_test(NAME StbTest COMMAND "PixelRenderer stb Test")
-#Animation Test (generating 10 second video)
-add_executable(AnimTest
-	src/Test/Animation/AnimTest.cpp src/Test/Animation/Anim1Shapes.cpp
-	src/Test/Animation/Anim2Textures.cpp src/Test/Animation/Anim3Blending.cpp
-	src/Test/Animation/Anim4Repetition.cpp src/Test/Animation/Anim5Fonts.cpp
-	src/Test/Animation/AnimFunctions.cpp src/Test/Animation/Anim6Sprite.cpp
-)
-set_target_properties(AnimTest PROPERTIES OUTPUT_NAME "PixelRenderer Animation Test")
-target_link_libraries(AnimTest PRIVATE PixelRenderer)
-add_test(NAME AnimTest COMMAND "PixelRenderer Animation Test")
+if (BuildRenderTests)
+	enable_testing()
+	
+	#Stb Save and Load Test
+	add_executable(StbTest src/Test/stb/stbTest.cpp)
+	set_target_properties(StbTest PROPERTIES OUTPUT_NAME "PixelRenderer stb Test")
+	target_link_libraries(StbTest PRIVATE PixelRenderer)
+	add_test(NAME StbTest COMMAND "PixelRenderer stb Test")
+	#Animation Test (generating 10 second video)
+	add_executable(AnimTest
+		src/Test/Animation/AnimTest.cpp src/Test/Animation/Anim1Shapes.cpp
+		src/Test/Animation/Anim2Textures.cpp src/Test/Animation/Anim3Blending.cpp
+		src/Test/Animation/Anim4Repetition.cpp src/Test/Animation/Anim5Fonts.cpp
+		src/Test/Animation/AnimFunctions.cpp src/Test/Animation/Anim6Sprite.cpp
+	)
+	set_target_properties(AnimTest PROPERTIES OUTPUT_NAME "PixelRenderer Animation Test")
+	target_link_libraries(AnimTest PRIVATE PixelRenderer)
+	add_test(NAME AnimTest COMMAND "PixelRenderer Animation Test")
+
+endif()
