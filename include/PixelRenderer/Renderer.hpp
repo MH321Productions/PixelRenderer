@@ -17,6 +17,7 @@ class Color {
 
         Color(const rgb& r, const rgb& g, const rgb& b, const rgb& a): r(r), g(g), b(b), a(a) {}
         Color(const int& r, const int& g, const int& b, const int& a);
+        Color(const uint32_t& rgba);
         Color(const Color& c) : r(c.r), g(c.g), b(c.b), a(c.a) {}
         Color(Color& c) : r(c.r), g(c.g), b(c.b), a(c.a) {}
         Color() : r(0), g(0), b(0), a(0) {}

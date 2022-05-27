@@ -16,6 +16,14 @@ Color::Color(const int& r, const int& g, const int& b, const int& a) {
     setValue(a, Color::a);
 }
 
+Color::Color(const uint32_t& rgba) {
+    //Mask and Shift the 4 Bytes
+    r = (rgb) ((rgba & 0xFF000000) >> 24);
+    g = (rgb) ((rgba & 0xFF0000) >> 16);
+    b = (rgb) ((rgba & 0xFF00) >> 8);
+    a = (rgb) (rgba & 0xFF);
+}
+
 void Color::setValue(const int& input, rgb& rgba) {
     if (input < 0) rgba = 0;
     else if (input > 0xFF) rgba = 0xFF;
