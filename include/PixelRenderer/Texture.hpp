@@ -3,10 +3,9 @@
 #include <vector>
 
 #include "Loader.hpp"
+#include "Renderer.hpp"
 
 using rgb = unsigned char;
-
-class Color;
 
 class TextureManager;
 
