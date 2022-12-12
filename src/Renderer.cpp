@@ -239,7 +239,7 @@ void Renderer::drawText(Font* font, const String32& text, const int& x, const in
     FT_GlyphSlot slot = font->face->glyph;
     FT_Bitmap map;
     if (charSpacing < 0) charSpacing = size / 10 + 1;
-    int spaceSpacing = size / 2;
+    int spaceSpacing = charSpacing * 2;
     Color temp;
 
     for (const uint32_t& i: text) {
