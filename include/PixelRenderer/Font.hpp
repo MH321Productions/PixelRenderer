@@ -5,7 +5,7 @@
 #include <ft2build.h>
 #include FT_FREETYPE_H
 
-#include "Loader.hpp"
+#include "PixelRenderer/Loader.hpp"
 
 class FontManager;
 class Renderer;
