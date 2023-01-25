@@ -7,24 +7,24 @@
 
 using namespace std;
 
-SpriteInfo info(400, 400, 10, 4);
-Rect animDest(100, 300, 400, 400);
-String32 sprDescription = U"Render spritesheets";
-Rect sprDest(800, 250, 1000, 750);
-Rect sprFrame(0, 0, 250, 250);
+PixelRenderer::SpriteInfo info(400, 400, 10, 4);
+PixelRenderer::Rect animDest(100, 300, 400, 400);
+PixelRenderer::String32 sprDescription = U"Render spritesheets";
+PixelRenderer::Rect sprDest(800, 250, 1000, 750);
+PixelRenderer::Rect sprFrame(0, 0, 250, 250);
 
 void calculateFrame(const int& image);
 
 void PartSprite::renderPart(const int& image) {
-    anim->renderer->setColor(Colors::Green);
-    anim->renderer->setBlendingMethod(BlendingMethod::AlphaBlending);
+    anim->renderer->setColor(PixelRenderer::Colors::Green);
+    anim->renderer->setBlendingMethod(PixelRenderer::BlendingMethod::AlphaBlending);
     anim->renderer->drawText(anim->robotoFont, sprDescription, 30, 180, 200);
 
     anim->renderer->drawSpritesheet(anim->sprite, animDest, info, image / 2, true);
-    anim->renderer->drawTexture(anim->sprite, Rect::emptyRect, sprDest);
+    anim->renderer->drawTexture(anim->sprite, PixelRenderer::Rect::emptyRect, sprDest);
 
     calculateFrame(image);
-    anim->renderer->setColor(Colors::Red);
+    anim->renderer->setColor(PixelRenderer::Colors::Red);
     anim->renderer->drawRect(sprFrame, 5);
 }
 

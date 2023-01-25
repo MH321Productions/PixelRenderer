@@ -9,6 +9,7 @@
 #include "stb_image_write.h"
 
 using namespace std;
+using namespace PixelRenderer;
 
 int main() {
     cout << "Hello World" << endl;

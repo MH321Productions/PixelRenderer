@@ -5,20 +5,23 @@
 
 using namespace std;
 
-Texture::Texture(const int& width, const int& height, const int& channel, TextureManager* manager, const LoadInfo& info)
-:width(width), height(height), channel(channel), manager(manager), info(info) {
-        data.resize(width * height);
+namespace PixelRenderer {
+
+    Texture::Texture(const int& width, const int& height, const int& channel, TextureManager* manager, const LoadInfo& info)
+    :width(width), height(height), channel(channel), manager(manager), info(info) {
+            data.resize(width * height);
+        }
+
+    Texture::~Texture() {
+        data.clear();
+        if (manager) manager->removeTexture(this);
     }
 
-Texture::~Texture() {
-    data.clear();
-    if (manager) manager->removeTexture(this);
-}
+    const std::vector<Color>& Texture::getData() const {
+        return data;
+    }
 
-const std::vector<Color>& Texture::getData() const {
-    return data;
-}
-
-Color& Texture::at(const int& x, const int& y) {
-    return data.at(y * width + x);
+    Color& Texture::at(const int& x, const int& y) {
+        return data.at(y * width + x);
+    }
 }

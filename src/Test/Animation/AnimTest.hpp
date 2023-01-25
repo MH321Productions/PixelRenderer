@@ -27,12 +27,12 @@ class AnimationTest {
         void registerPart(Part* part);
 
     public:
-        Renderer* renderer;
-        FontManager* fontMan;
-        TextureManager* textureMan;
-        Font* robotoFont;
-        Font* futureFont;
-        Texture* fruit, *check, *sprite;
+        PixelRenderer::Renderer* renderer;
+        PixelRenderer::FontManager* fontMan;
+        PixelRenderer::TextureManager* textureMan;
+        PixelRenderer::Font* robotoFont;
+        PixelRenderer::Font* futureFont;
+        PixelRenderer::Texture* fruit, *check, *sprite;
 
         int onExecute();
 };

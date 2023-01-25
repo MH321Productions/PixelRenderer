@@ -3,24 +3,24 @@
 #include "PixelRenderer/Unicode.hpp"
 #include "PixelRenderer/Geometry.hpp"
 
-String32 texDescription = U"Render and scale textures";
-String32 texFile = U"File", texMem = U"Memory";
-Rect texTableVert {955, 130, 10, 950};
-Rect texTableHor {0, 270, 1920, 10};
-Rect texFruitDest {10, 290, 935, 780};
-Rect texFruitSrc {491, 0, 3913, 3264};
-Rect texCheck {975, 290, 18, 18};
+PixelRenderer::String32 texDescription = U"Render and scale textures";
+PixelRenderer::String32 texFile = U"File", texMem = U"Memory";
+PixelRenderer::Rect texTableVert {955, 130, 10, 950};
+PixelRenderer::Rect texTableHor {0, 270, 1920, 10};
+PixelRenderer::Rect texFruitDest {10, 290, 935, 780};
+PixelRenderer::Rect texFruitSrc {491, 0, 3913, 3264};
+PixelRenderer::Rect texCheck {975, 290, 18, 18};
 
 void PartTexture::renderPart(const int& image) {
     //description texts
-    anim->renderer->setColor(Colors::Green);
-    anim->renderer->setBlendingMethod(BlendingMethod::AlphaBlending);
+    anim->renderer->setColor(PixelRenderer::Colors::Green);
+    anim->renderer->setBlendingMethod(PixelRenderer::BlendingMethod::AlphaBlending);
     anim->renderer->drawText(anim->robotoFont, texDescription, 20, 120, 150);
     anim->renderer->drawText(anim->robotoFont, texFile, 400, 240, 100);
     anim->renderer->drawText(anim->robotoFont, texMem, 1275, 240, 100);
 
     //create table
-    anim->renderer->setColor(Colors::Red);
+    anim->renderer->setColor(PixelRenderer::Colors::Red);
     anim->renderer->fillRect(texTableVert);
     anim->renderer->fillRect(texTableHor);
 
@@ -46,5 +46,5 @@ void PartTexture::renderPart(const int& image) {
         texCheck.width = 931;
         texCheck.height = 20 + (int) scaleY;
     }
-    anim->renderer->drawTexture(anim->check, Rect::emptyRect, texCheck);
+    anim->renderer->drawTexture(anim->check, PixelRenderer::Rect::emptyRect, texCheck);
 }
