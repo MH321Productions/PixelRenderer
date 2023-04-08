@@ -81,6 +81,17 @@ namespace PixelRenderer {
     enum RepetitionMode: char {None, X, Y, XY};
 
     /**
+     * This struct contains information about a rendered text
+     * (see Renderer::getTextInfo)
+    */
+    struct TextInfo {
+        bool success;
+        size_t width;
+        size_t height;
+        int64_t overflowIndex; //The index of the character which exceeds the width limit (or -1)
+    };
+
+    /**
      * The 2D Renderer to render GUIs, HUDs etc.
      * It works a bit like OpenGL as a state mashine.
      * The color for drawing shapes and texts, as well as the blending method
@@ -238,5 +249,15 @@ namespace PixelRenderer {
              * @param charSpacing The spacing between two charakters (normally 1/10 of the size)
              */ 
             void drawText(Font* font, const String32& text, const int& x, const int& y, const int& size, int charSpacing = -1);
+
+            /**
+             * Query size information about a text
+             * @param font The font to display the text
+             * @param text The UTF-32 text
+             * @param size The size (pixel)
+             * @param maxWidth Report if the rendered text exceeds this width (-1 for no limits)
+             * @param charSpacing The spacing between two charakters (-1 for 1/10 of the size)
+            */
+            TextInfo getTextInfo(Font* font, const String32& text, const int& size, const int& maxWidth = -1, int charSpacing = -1);
     };
 }

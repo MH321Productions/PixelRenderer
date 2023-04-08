@@ -291,6 +291,56 @@ namespace PixelRenderer {
 
     }
 
+    TextInfo Renderer::getTextInfo(Font* font, const String32& text, const int& size, const int& maxWidth, int charSpacing) {
+        if (text.isEmpty() || size < 1 || !font->setSize(size)) return {false, 0, 0, -1};
+
+        uint32_t glyphIndex;
+        FT_GlyphSlot slot = font->face->glyph;
+        FT_Bitmap map;
+        if (charSpacing < 0) charSpacing = size / 10 + 1;
+        int spaceSpacing = charSpacing * 2;
+
+        bool success = true;
+        size_t width = 0;
+        size_t height = 0;
+        size_t overflow = 0;
+
+        for (const uint32_t& i: text) {
+            if (i == 32) {
+                width += spaceSpacing;
+                if (width < maxWidth) overflow++;
+
+                continue;
+            }
+
+            glyphIndex = FT_Get_Char_Index(font->face, i);
+            if (!FontManager::checkFTError(
+                FT_Load_Glyph(font->face, glyphIndex, FT_LOAD_DEFAULT),
+                "Couldn't load glyph"
+            )) {
+                success = false;
+                overflow++;
+                continue;
+            }
+
+            if (!FontManager::checkFTError(
+                FT_Render_Glyph(slot, FT_RENDER_MODE_NORMAL),
+                "Couldn't render glyph"
+            )) {
+                success = false;
+                overflow++;
+                continue;
+            }
+
+            map = slot->bitmap;
+            width += map.width + charSpacing;
+            if (map.rows > height) height = map.rows;
+            if (width < maxWidth) overflow++;
+        }
+
+        return {success, width, height, (width > maxWidth ? overflow : -1)};
+    }
+
     Color* Renderer::getData() {
         return data;
     }
