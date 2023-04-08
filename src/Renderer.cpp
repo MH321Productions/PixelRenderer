@@ -52,7 +52,7 @@ namespace PixelRenderer {
             pixel += (c * gray);
         } else if (blending == BlendingMethod::AlphaBlending) {
             pixel = (pixel * invertGray) + (c * gray);
-            pixel.a = 255;
+            if (pixel.a) pixel.a = 255;
         }
     }
 
