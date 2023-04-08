@@ -60,7 +60,7 @@ namespace PixelRenderer {
         return ToUTF8(data);
     }
 
-    void String32::append(const String32& other) {
+    String32& String32::append(const String32& other) {
         size_t max = sizeIntern + other.sizeIntern;
         data.resize(max);
 
@@ -69,18 +69,21 @@ namespace PixelRenderer {
         }
 
         sizeIntern = max;
+        return *this;
     }
 
-    void String32::append(char32_t* text, const std::size_t& max) {
+    String32& String32::append(char32_t* text, const std::size_t& max) {
         for (size_t i = 0; i < max; i++) {
             if (text[i] == '\0') break; //'\0' is always the last char of a C-string
 
             data.push_back((uint32_t) text[i]);
             sizeIntern++;
         }
+
+        return *this;
     }
 
-    void String32::append(const std::vector<uint32_t>& newData) {
+    String32& String32::append(const std::vector<uint32_t>& newData) {
         size_t max = sizeIntern + newData.size();
         data.resize(max);
 
@@ -89,19 +92,24 @@ namespace PixelRenderer {
         }
 
         sizeIntern = max;
+        return *this;
     }
 
-    void String32::append(const char32_t& c) {
+    String32& String32::append(const char32_t& c) {
         data.push_back((uint32_t) c);
         sizeIntern++;
+
+        return *this;
     }
 
-    void String32::append(const uint32_t& i) {
+    String32& String32::append(const uint32_t& i) {
         data.push_back(i);
         sizeIntern++;
+
+        return *this;
     }
 
-    void String32::append(const string& str) {
+    String32& String32::append(const string& str) {
         vector<uint32_t> newData = FromUTF8(str.c_str());
         
         size_t s = sizeIntern;
@@ -109,6 +117,19 @@ namespace PixelRenderer {
 
         for (size_t i = 0; i < newData.size(); i++) data.at(s + i) = newData.at(i);
         sizeIntern += newData.size();
+
+        return *this;
+    }
+
+    String32 String32::substring(const size_t& start, const size_t& end) {
+        String32 ret;
+        for (size_t i = start; i < sizeIntern; i++) {
+            if (i >= end) break;
+
+            ret.append(data.at(i));
+        }
+
+        return ret;
     }
 
     String32& String32::operator += (const String32& other) {

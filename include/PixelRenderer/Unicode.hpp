@@ -71,12 +71,14 @@ namespace PixelRenderer {
             uint32_t& at(const std::size_t& index);
             std::string toString() const;
 
-            void append(const String32& other);
-            void append(char32_t* text, const std::size_t& max = npos);
-            void append(const std::vector<uint32_t>& newData);
-            void append(const char32_t& c);
-            void append(const uint32_t& i);
-            void append(const std::string& str);
+            String32& append(const String32& other);
+            String32& append(char32_t* text, const std::size_t& max = npos);
+            String32& append(const std::vector<uint32_t>& newData);
+            String32& append(const char32_t& c);
+            String32& append(const uint32_t& i);
+            String32& append(const std::string& str);
+
+            String32 substring(const size_t& start, const size_t& end = npos);
 
             String32& operator += (const String32& other);
             String32& operator += (char32_t* other);
