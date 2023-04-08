@@ -292,7 +292,7 @@ namespace PixelRenderer {
     }
 
     TextInfo Renderer::getTextInfo(Font* font, const String32& text, const int& size, const int& maxWidth, int charSpacing) {
-        if (text.isEmpty() || size < 1 || !font->setSize(size)) return {false, 0, 0, -1};
+        if (text.isEmpty() || size < 1 || !font->setSize(size)) return {false, 0, 0, String32::npos};
 
         uint32_t glyphIndex;
         FT_GlyphSlot slot = font->face->glyph;
