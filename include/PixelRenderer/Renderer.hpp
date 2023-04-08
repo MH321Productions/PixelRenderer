@@ -258,6 +258,6 @@ namespace PixelRenderer {
              * @param maxWidth Report if the rendered text exceeds this width (-1 for no limits)
              * @param charSpacing The spacing between two charakters (-1 for 1/10 of the size)
             */
-            TextInfo getTextInfo(Font* font, const String32& text, const int& size, const int& maxWidth = -1, int charSpacing = -1);
+            static TextInfo getTextInfo(Font* font, const String32& text, const int& size, const int& maxWidth = -1, int charSpacing = -1);
     };
 }
