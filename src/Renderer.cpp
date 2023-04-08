@@ -338,7 +338,7 @@ namespace PixelRenderer {
             if (width < maxWidth) overflow++;
         }
 
-        return {success, width, height, (width > maxWidth ? overflow : -1)};
+        return {success, width, height, (width > maxWidth ? overflow : String32::npos)};
     }
 
     Color* Renderer::getData() {

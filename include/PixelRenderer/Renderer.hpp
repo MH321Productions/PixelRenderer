@@ -86,9 +86,9 @@ namespace PixelRenderer {
     */
     struct TextInfo {
         bool success;
-        size_t width;
-        size_t height;
-        int64_t overflowIndex; //The index of the character which exceeds the width limit (or -1)
+        uint64_t width;
+        uint64_t height;
+        uint64_t overflowIndex; //The index of the character which exceeds the width limit (or String32::npos)
     };
 
     /**
