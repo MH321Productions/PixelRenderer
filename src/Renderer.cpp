@@ -292,23 +292,21 @@ namespace PixelRenderer {
     }
 
     TextInfo Renderer::getTextInfo(Font* font, const String32& text, const int& size, const int& maxWidth, int charSpacing) {
-        if (text.isEmpty() || size < 1 || !font->setSize(size)) return {false, 0, 0, String32::npos};
+        if (text.isEmpty() || size < 1 || !font->setSize(size)) return {false, 0, 0, 0, 0, String32::npos};
 
         uint32_t glyphIndex;
         FT_GlyphSlot slot = font->face->glyph;
         FT_Bitmap map;
         if (charSpacing < 0) charSpacing = size / 10 + 1;
         int spaceSpacing = charSpacing * 2;
+        uint64_t below;
 
-        bool success = true;
-        size_t width = 0;
-        size_t height = 0;
-        size_t overflow = 0;
+        TextInfo ret;
 
         for (const uint32_t& i: text) {
             if (i == 32) {
-                width += spaceSpacing;
-                if (width < maxWidth) overflow++;
+                ret.width += spaceSpacing;
+                if (ret.width < maxWidth) ret.overflowIndex++;
 
                 continue;
             }
@@ -318,8 +316,8 @@ namespace PixelRenderer {
                 FT_Load_Glyph(font->face, glyphIndex, FT_LOAD_DEFAULT),
                 "Couldn't load glyph"
             )) {
-                success = false;
-                overflow++;
+                ret.success = false;
+                ret.overflowIndex++;
                 continue;
             }
 
@@ -327,18 +325,24 @@ namespace PixelRenderer {
                 FT_Render_Glyph(slot, FT_RENDER_MODE_NORMAL),
                 "Couldn't render glyph"
             )) {
-                success = false;
-                overflow++;
+                ret.success = false;
+                ret.overflowIndex++;
                 continue;
             }
 
             map = slot->bitmap;
-            width += map.width + charSpacing;
-            if (map.rows > height) height = map.rows;
-            if (width < maxWidth) overflow++;
+            ret.width += map.width + charSpacing;
+            below = map.rows - slot->bitmap_top;
+
+            if (map.rows > ret.height) ret.height = map.rows;
+            if (slot->bitmap_top > ret.upperHeight) ret.upperHeight = slot->bitmap_top;
+            if (below > ret.lowerHeight) ret.lowerHeight = below;
+            if (ret.width < maxWidth) ret.overflowIndex++;
         }
 
-        return {success, width, height, (width > maxWidth ? overflow : String32::npos)};
+        if (ret.width <= maxWidth) ret.overflowIndex = String32::npos;
+
+        return ret;
     }
 
     Color* Renderer::getData() {

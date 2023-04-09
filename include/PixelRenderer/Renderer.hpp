@@ -88,6 +88,8 @@ namespace PixelRenderer {
         bool success;
         uint64_t width;
         uint64_t height;
+        uint64_t upperHeight;
+        uint64_t lowerHeight;
         uint64_t overflowIndex; //The index of the character which exceeds the width limit (or String32::npos)
     };
 
