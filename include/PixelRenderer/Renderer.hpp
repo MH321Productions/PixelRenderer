@@ -248,7 +248,7 @@ namespace PixelRenderer {
              * @param x The x-coordinate
              * @param y The y-coordinate
              * @param size The size (pixel)
-             * @param charSpacing The spacing between two charakters (normally 1/10 of the size)
+             * @param charSpacing The spacing between two characters (normally 1/10 of the size)
              */ 
             void drawText(Font* font, const String32& text, const int& x, const int& y, const int& size, int charSpacing = -1);
 
