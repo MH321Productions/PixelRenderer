@@ -71,14 +71,17 @@ namespace PixelRenderer {
         friend class Texture;
         private:
             std::vector<Texture*> loadedTextures;
+            std::vector<VectorTexture*> loadedVectorTextures;
             bool blockRemoval = false;
 
             void removeTexture(Texture* texture);
+            void removeTexture(VectorTexture* texture);
         
         public:
             TextureManager() {}
             ~TextureManager();
 
             Texture* getTexture(const LoadInfo& type);
+            VectorTexture* getVectorTexture(const LoadInfo& type);
     };
 }
