@@ -10,12 +10,12 @@ include_directories(lib/freetype/include)
 include_directories(lib/stb)
 add_subdirectory(lib/lunasvg)
 include_directories(lib/lunasvg/include)
-include_directories(${CMAKE_BINARY_DIR}/lib/lunasvg/include)
+include_directories(${CMAKE_CURRENT_BINARY_DIR}/lib/lunasvg/include)
 
 set(CMAKE_CXX_STANDARD 17)
 
 #Main Library
-add_library(PixelRenderer
+add_library(PixelRenderer STATIC
 	src/Color.cpp src/Font.cpp src/FontManager.cpp src/Geometry.cpp src/Renderer.cpp src/String32.cpp
 	src/Texture.cpp src/TextureLoader.cpp src/TextureManager.cpp src/stbImpl.cpp src/UTFLoader.cpp
 )
