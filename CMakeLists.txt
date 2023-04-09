@@ -19,8 +19,8 @@ add_library(PixelRenderer
 	src/Color.cpp src/Font.cpp src/FontManager.cpp src/Geometry.cpp src/Renderer.cpp src/String32.cpp
 	src/Texture.cpp src/TextureLoader.cpp src/TextureManager.cpp src/stbImpl.cpp src/UTFLoader.cpp
 )
-list(APPEND libs freetype)
-target_link_libraries(PixelRenderer PRIVATE "${libs}")
+list(APPEND libs freetype lunasvg)
+target_link_libraries(PixelRenderer PRIVATE ${libs})
 
 #Testing (only if option is activated)
 option(BuildRenderTests "Builds the Rendering test programs" ON)
