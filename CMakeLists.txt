@@ -8,8 +8,11 @@ include_directories(include)
 add_subdirectory(lib/freetype)
 include_directories(lib/freetype/include)
 include_directories(lib/stb)
+add_subdirectory(lib/lunasvg)
+include_directories(lib/lunasvg/include)
+include_directories(${CMAKE_BINARY_DIR}/lib/lunasvg/include)
 
-set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD 17)
 
 #Main Library
 add_library(PixelRenderer
