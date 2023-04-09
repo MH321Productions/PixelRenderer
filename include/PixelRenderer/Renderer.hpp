@@ -8,6 +8,7 @@ using rgb = unsigned char;
 namespace PixelRenderer {
 
     class Texture;          //Texture.hpp
+    class VectorTexture;    //Texture.hpp
     class Font;             //Font.hpp
     class String32;         //Unicode.cpp
     class Point;            //Geometry.hpp
@@ -220,6 +221,14 @@ namespace PixelRenderer {
              * @param dest The part of the canvas that should be copied into, or Rect::emptyRect/NULL for the entire canvas
              */ 
             void drawTexture(Texture* texture, const Rect& src, const Rect& dest);
+
+            /**
+             * Draws a vector texture (or a part of it) with the current blending method
+             * @param texture The vector texture
+             * @param src The part of the texture that should be copied, or Rect::emptyRect/NULL for the whole texture
+             * @param dest The part of the canvas that should be copied into, or Rect::emptyRect/NULL for the entire canvas
+             */ 
+            void drawTexture(VectorTexture* texture, const Rect& src, const Rect& dest);
 
             /**
              * Draws a texture (or a part of it) with the current blending method and given repetition mode
