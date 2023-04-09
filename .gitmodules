@@ -4,3 +4,6 @@
 [submodule "lib/stb"]
 	path = lib/stb
 	url = https://github.com/nothings/stb
+[submodule "lib/lunasvg"]
+	path = lib/lunasvg
+	url = https://github.com/sammycage/lunasvg.git
