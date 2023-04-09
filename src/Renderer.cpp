@@ -301,7 +301,7 @@ namespace PixelRenderer {
         int spaceSpacing = charSpacing * 2;
         uint64_t below;
 
-        TextInfo ret;
+        TextInfo ret = {true, 0, 0, 0, 0, 0};
 
         for (const uint32_t& i: text) {
             if (i == 32) {
@@ -334,13 +334,13 @@ namespace PixelRenderer {
             ret.width += map.width + charSpacing;
             below = map.rows - slot->bitmap_top;
 
-            if (map.rows > ret.height) ret.height = map.rows;
             if (slot->bitmap_top > ret.upperHeight) ret.upperHeight = slot->bitmap_top;
             if (below > ret.lowerHeight) ret.lowerHeight = below;
             if (ret.width < maxWidth) ret.overflowIndex++;
         }
 
         if (ret.width <= maxWidth) ret.overflowIndex = String32::npos;
+        ret.height = ret.upperHeight + ret.lowerHeight;
 
         return ret;
     }
