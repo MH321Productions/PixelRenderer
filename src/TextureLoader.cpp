@@ -103,4 +103,15 @@ namespace PixelRenderer {
 
         return result;
     }
+
+    bool VectorTexture::load() {
+        if (info.useMemory()) doc = lunasvg::Document::loadFromData((char*) info.data, info.size);
+        else if (info.usePath()) doc = lunasvg::Document::loadFromFile(info.path);
+
+        if (doc == nullptr) return false;
+
+        target = new Texture(0, 0, 4, NULL, info);
+
+        return true;
+    }
 }

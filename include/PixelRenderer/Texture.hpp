@@ -2,6 +2,8 @@
 
 #include <vector>
 
+#include <lunasvg.h>
+
 #include "PixelRenderer/Loader.hpp"
 #include "PixelRenderer/Renderer.hpp"
 
@@ -10,9 +12,11 @@ using rgb = unsigned char;
 namespace PixelRenderer {
 
     class TextureManager;
+    class VectorTexture;
 
     class Texture {
         friend class TextureManager;
+        friend class VectorTexture;
         private:
             std::vector<Color> data;
             TextureManager* manager;
@@ -32,6 +36,35 @@ namespace PixelRenderer {
             Color& at(const int& x, const int& y);
             inline bool isOutside(const int& x, const int& y) const {return x < 0 || y < 0 || x >= width || y >= height;}
 
+    };
+
+    class VectorTexture {
+        friend class TextureManager;
+        private:
+            std::unique_ptr<lunasvg::Document> doc;
+            lunasvg::Bitmap bitmap;
+
+            TextureManager* manager;
+            Texture* target;
+            LoadInfo info;
+
+            VectorTexture(TextureManager* manager, const LoadInfo& info) : manager(manager), info(info), doc(nullptr) {}
+
+            /**
+             * Load the image
+            */
+            bool load();
+        
+        public:
+            ~VectorTexture();
+
+            /**
+             * Render the svg and store it in the texture for further use
+             * @param width The desired width
+             * @param height The desired height
+             * @return The rendered texture (Do NOT delete it)
+            */
+            Texture* render(const int& width, const int& height);
     };
 
     class TextureManager {
