@@ -56,6 +56,7 @@ namespace PixelRenderer {
             bool load();
         
         public:
+            double width, height;
             ~VectorTexture();
 
             /**

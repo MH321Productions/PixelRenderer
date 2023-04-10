@@ -110,7 +110,10 @@ namespace PixelRenderer {
 
         if (doc == nullptr) return false;
 
-        target = new Texture(0, 0, 4, NULL, info);
+        width = doc->width();
+        height = doc->height();
+
+        target = new Texture(width, height, 4, NULL, info);
 
         return true;
     }

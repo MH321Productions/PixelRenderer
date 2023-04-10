@@ -44,7 +44,7 @@ namespace PixelRenderer {
         target->data.resize(width * height);
 
         Color c;
-        size_t raw;
+        size_t raw = 0;
         uint8_t* data = bitmap.data();
         for (size_t i = 0; i < width * height; i++) {
             c.r = data[raw];

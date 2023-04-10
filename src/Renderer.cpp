@@ -166,16 +166,21 @@ namespace PixelRenderer {
         }
     }
 
-    void Renderer::drawTexture(VectorTexture* texture, const Rect& src, const Rect& dest) {
+    void Renderer::drawTexture(VectorTexture* texture, const Rect& dest) {
+        Rect rDest;
+
+        //Test if dest is valid, or else 0, 0, renderWidth, renderHeight
+        if (dest.isValid()) rDest = dest;
+        else rDest = {0, 0, width, height};
+
         //Resize vector texture so that the desired part is exactly as big as the output rect
-        double scX = (double) dest.width / (double) src.width;
-        double scY = (double) dest.height / (double) src.height;
+        double scX = (double) rDest.width / texture->width;
+        double scY = (double) rDest.height / texture->height;
 
-        Rect resSrc = {(int) (src.x * scX), (int) (src.y * scY), (int) (src.width * scX), (int) (src.height * scY)};
-        int resW = (int) (dest.width * scX);
-        int resH = (int) (dest.height * scY);
+        int resW = (int) (texture->width * scX);
+        int resH = (int) (texture->height * scY);
 
-        drawTexture(texture->render(resW, resH), resSrc, dest);
+        drawTexture(texture->render(resW, resH), NULL, rDest);
     }
 
     void Renderer::drawRepeatingTexture(Texture* texture, const Rect& src, const Rect& dest, RepetitionMode mode) {
