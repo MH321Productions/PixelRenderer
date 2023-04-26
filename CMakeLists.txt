@@ -23,9 +23,9 @@ list(APPEND libs freetype lunasvg)
 target_link_libraries(PixelRenderer PRIVATE ${libs})
 
 #Testing (only if option is activated)
-option(BuildRenderTests "Builds the Rendering test programs" ON)
+option(PR_BUILD_TESTS "Builds the Rendering test programs" OFF)
 
-if (BuildRenderTests)
+if (PR_BUILD_TESTS)
 	enable_testing()
 	
 	#Stb Save and Load Test
