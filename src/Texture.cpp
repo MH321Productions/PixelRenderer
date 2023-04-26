@@ -27,6 +27,7 @@ namespace PixelRenderer {
 
     //VectorTexture
 
+    #ifdef PR_SVG
     VectorTexture::~VectorTexture() {
         if (target) delete target;
     }
@@ -58,4 +59,5 @@ namespace PixelRenderer {
 
         return target;
     }
+    #endif
 }

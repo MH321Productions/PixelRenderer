@@ -166,6 +166,7 @@ namespace PixelRenderer {
         }
     }
 
+    #ifdef PR_SVG
     void Renderer::drawTexture(VectorTexture* texture, const Rect& dest) {
         Rect rDest;
 
@@ -182,6 +183,7 @@ namespace PixelRenderer {
 
         drawTexture(texture->render(resW, resH), NULL, rDest);
     }
+    #endif
 
     void Renderer::drawRepeatingTexture(Texture* texture, const Rect& src, const Rect& dest, RepetitionMode mode) {
         if (mode == None) { //Redirect to normal drawTexture method

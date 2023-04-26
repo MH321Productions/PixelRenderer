@@ -104,6 +104,7 @@ namespace PixelRenderer {
         return result;
     }
 
+    #ifdef PR_SVG
     bool VectorTexture::load() {
         if (info.useMemory()) doc = lunasvg::Document::loadFromData((char*) info.data, info.size);
         else if (info.usePath()) doc = lunasvg::Document::loadFromFile(info.path);
@@ -117,4 +118,5 @@ namespace PixelRenderer {
 
         return true;
     }
+    #endif
 }

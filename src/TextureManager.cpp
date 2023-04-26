@@ -18,29 +18,16 @@ namespace PixelRenderer {
         return load;
     }
 
-    VectorTexture* TextureManager::getVectorTexture(const LoadInfo& info) {
-        for (VectorTexture* t: loadedVectorTextures) {
-            if (t->info == info) return t; //Temporary
-        }
-
-        VectorTexture* load = new VectorTexture(this, info);
-        if (load->load()) loadedVectorTextures.push_back(load);
-        else {
-            delete load;
-            load = NULL;
-        }
-
-        return load;
-    }
-
     TextureManager::~TextureManager() {
         blockRemoval = true; //The textures can't remove themselves
 
         for (Texture* t: loadedTextures) delete t;
-        for (VectorTexture* t: loadedVectorTextures) delete t;
-
         loadedTextures.clear();
+
+        #ifdef PR_SVG
+        for (VectorTexture* t: loadedVectorTextures) delete t;
         loadedVectorTextures.clear();
+        #endif
 
         //cout << "Deleted TextureManager" << endl;
     }
@@ -56,6 +43,22 @@ namespace PixelRenderer {
         }
     }
 
+    #ifdef PR_SVG
+    VectorTexture* TextureManager::getVectorTexture(const LoadInfo& info) {
+        for (VectorTexture* t: loadedVectorTextures) {
+            if (t->info == info) return t; //Temporary
+        }
+
+        VectorTexture* load = new VectorTexture(this, info);
+        if (load->load()) loadedVectorTextures.push_back(load);
+        else {
+            delete load;
+            load = NULL;
+        }
+
+        return load;
+    }
+
     void TextureManager::removeTexture(VectorTexture* texture) {
         if (!blockRemoval && texture != NULL) {
             for (vector<VectorTexture*>::iterator it = loadedVectorTextures.begin(); it != loadedVectorTextures.end(); it++) {
@@ -66,4 +69,5 @@ namespace PixelRenderer {
             }
         }
     }
+    #endif
 }

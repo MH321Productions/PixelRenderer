@@ -2,7 +2,9 @@
 
 #include <vector>
 
+#ifdef PR_SVG
 #include <lunasvg.h>
+#endif
 
 #include "PixelRenderer/Loader.hpp"
 #include "PixelRenderer/Renderer.hpp"
@@ -12,7 +14,10 @@ using rgb = unsigned char;
 namespace PixelRenderer {
 
     class TextureManager;
+    
+    #ifdef PR_SVG
     class VectorTexture;
+    #endif
 
     class Texture {
         friend class TextureManager;
@@ -38,6 +43,7 @@ namespace PixelRenderer {
 
     };
 
+    #ifdef PR_SVG
     class VectorTexture {
         friend class TextureManager;
         private:
@@ -67,22 +73,30 @@ namespace PixelRenderer {
             */
             Texture* render(const int& width, const int& height);
     };
+    #endif
 
     class TextureManager {
         friend class Texture;
         private:
             std::vector<Texture*> loadedTextures;
-            std::vector<VectorTexture*> loadedVectorTextures;
             bool blockRemoval = false;
 
             void removeTexture(Texture* texture);
+
+            #ifdef PR_SVG
+            std::vector<VectorTexture*> loadedVectorTextures;
+            
             void removeTexture(VectorTexture* texture);
+            #endif
         
         public:
             TextureManager() {}
             ~TextureManager();
 
             Texture* getTexture(const LoadInfo& type);
+
+            #ifdef PR_SVG
             VectorTexture* getVectorTexture(const LoadInfo& type);
+            #endif
     };
 }
