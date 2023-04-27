@@ -318,7 +318,7 @@ namespace PixelRenderer {
         FT_Bitmap map;
         if (charSpacing < 0) charSpacing = size / 10 + 1;
         int spaceSpacing = charSpacing * 2;
-        uint64_t below;
+        int64_t below;
 
         TextInfo ret = {true, 0, 0, 0, 0, 0};
 
@@ -351,10 +351,10 @@ namespace PixelRenderer {
 
             map = slot->bitmap;
             ret.width += map.width + charSpacing;
-            below = map.rows - slot->bitmap_top;
+            below = (int64_t) map.rows - slot->bitmap_top;
 
             if (slot->bitmap_top > ret.upperHeight) ret.upperHeight = slot->bitmap_top;
-            if (below > ret.lowerHeight) ret.lowerHeight = below;
+            if (below > 0 && below > ret.lowerHeight) ret.lowerHeight = below;
             if (ret.width < maxWidth) ret.overflowIndex++;
         }
 
