@@ -311,7 +311,7 @@ namespace PixelRenderer {
         return data == oData && sizeIntern == oData.size();
     }
 
-    std::ostream& operator << (std::ostream& os, String32& other) {
+    std::ostream& operator << (std::ostream& os, const String32& other) {
         os << other.toString();
         return os;
     }

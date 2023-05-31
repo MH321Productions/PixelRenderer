@@ -106,7 +106,7 @@ namespace PixelRenderer {
             bool operator == (const std::vector<uint32_t>& other);
             bool operator == (const std::string& str);
 
-            friend std::ostream& operator << (std::ostream& os, String32& other);
+            friend std::ostream& operator << (std::ostream& os, const String32& other);
             friend std::istream& operator >> (std::istream& is, String32& other);
     };
 }
